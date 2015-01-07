@@ -1,4 +1,3 @@
-#include "perceptron.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -87,9 +86,9 @@ int main(int argc, char* argv[])
         }
 
         cout << "PRUEBAS: " <<endl;
-        Perceptron perc = new Perceptron();
-        //Perceptron perc = new Perceptron(2, 0.33, 0.2);
-        perc.trainPerceptron(1.2, 100, 10, sube, open, close);
+        //Perceptron perc = new Perceptron();
+        // Perceptron perc(2, 0.33, 0.2);
+        // perc.trainPerceptron(1.2, 100, 10, sube, open, close);
 
     }
     else

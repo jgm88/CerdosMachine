@@ -13,7 +13,7 @@ Perceptron::Perceptron(int size, double initWeight, double newAlpha)
 }
 
 void
-Perceptron::trainPerceptron(float threshold, int iterations, int numData, int[] vClass, double[] vOpen, double[] vClose)
+Perceptron::trainPerceptron(float threshold, int iterations, int numData, int vClass[], double vOpen[], double vClose[])
 {
 	int sClass;
 	double open;
@@ -23,7 +23,7 @@ Perceptron::trainPerceptron(float threshold, int iterations, int numData, int[] 
 	while(iterations > 0){
 		for (int i = 0; i < numData; ++i)
 		{
-			sClas = vClass[i];
+			sClass = vClass[i];
 			open = vOpen[i];
 			close = vClose[i];
 			output = 1;
@@ -36,7 +36,7 @@ Perceptron::trainPerceptron(float threshold, int iterations, int numData, int[] 
 		  	if (output != sClass)
 		  	{
 		  		vWeights[0] += alpha * (sClass - output) * open / 2;
-		  		vWeights[1] += alpha * (sclass - output) * close / 2; 
+		  		vWeights[1] += alpha * (sClass - output) * close / 2; 
 		  	}
 		}	
 		--iterations;
