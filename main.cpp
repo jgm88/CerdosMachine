@@ -1,3 +1,4 @@
+#include "perceptron.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -8,7 +9,7 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
-const int numDatos = 10;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
+const int numDatos = 20;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
@@ -85,10 +86,27 @@ int main(int argc, char* argv[])
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }
 
-        cout << "PRUEBAS: " <<endl;
-        //Perceptron perc = new Perceptron();
-        // Perceptron perc(2, 0.33, 0.2);
-        // perc.trainPerceptron(1.2, 100, 10, sube, open, close);
+        cout << endl << "PRUEBAS: " <<endl;
+
+        Perceptron perc = Perceptron(2, 0.33, 0.5);
+        perc.trainPerceptron(1.2, 100, 15, sube, open, close);
+        
+        for (int i = 15; i < numDatos; ++i)
+        {
+        	int comprobar = perc.validate(open[10], close[10]);
+        	if (sube[i] == comprobar)
+        	{
+        		cout << "DIOS MIO HE ENTRENADO" << endl;
+        		acierto++;
+        	}
+        	else
+        	{
+        		cout << "SOY UN PERDEDOR" <<endl;
+        		error++;
+        	}
+        }
+        cout << endl << "Aciertos: " << acierto << " Errores: " << error <<endl;
+
 
     }
     else
