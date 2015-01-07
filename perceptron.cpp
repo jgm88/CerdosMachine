@@ -1,3 +1,5 @@
+//compilar -std=c++11
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -8,7 +10,7 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
-int numDatos = 10;
+const int numDatos = 10;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
@@ -32,13 +34,13 @@ void procesarLinea(string linea, int numMuestra)
             switch(pos)
             {
                 case 0: sube[numMuestra] = stoi(aux, &sz);
-                break;
+                    break;
                 case 1: open[numMuestra] = stod(aux, &sz);
-                break;
+                    break;
                 case 2: close[numMuestra] = stod(aux, &sz); 
-                break;
+                    break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
-                break;
+                    break;
             }
 
             aux = "";
@@ -61,7 +63,7 @@ int main(int argc, char* argv[])
 
         if(ficheroEntrada.is_open())
         {
-            while(!ficheroEntrada.eof() && numMuestra < 5)
+            while(!ficheroEntrada.eof() && numMuestra < numDatos)
             {
                 getline(ficheroEntrada, cadena);
 
@@ -78,7 +80,9 @@ int main(int argc, char* argv[])
         ficheroEntrada.close();
 
         // Hacer cosas con los datos
-        for(int i = 0; i < 5; i ++)
+        int acierto = 0;
+        int error = 0;
+        for(int i = 0; i < numDatos; i ++)
         {
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }

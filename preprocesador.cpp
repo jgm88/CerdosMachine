@@ -27,19 +27,19 @@ void procesarLinea(string linea)
             switch(pos)
             {
                 case 0: aux = "";
-                break;
+                    break;
                 case 1: open = stod(aux, &sz);
-                break;
+                    break;
                 case 2: high = stod(aux, &sz);
-                break;
+                    break;
                 case 3: low = stod(aux, &sz);
-                break;
+                    break;
                 case 4: close = stod(aux, &sz);
-                break;
+                    break;
                 case 5: volume = stod(aux, &sz); cout << "volume" << volume << endl;
-                break;
+                    break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
-                break;
+                    break;
             }
 
             aux = "";
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
             cout << "ERROR: No se ha podido crear el fichero de salida" << endl;
         }
     }
-    else
+        else
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
