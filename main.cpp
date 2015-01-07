@@ -1,4 +1,4 @@
-// #include "perceptron.h"
+#include "perceptron.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -8,8 +8,8 @@ using namespace std;
 
 list<string> lineasProcesadas;
 const char delimiter = ',';
-std::string::size_type sz;     // alias of size_t
-const int numDatos = 10;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
+std::string::size_type sz;		// alias of size_t
+const int numDatos = 100;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
@@ -48,6 +48,30 @@ void procesarLinea(string linea, int numMuestra)
     }
 }
 
+void perceptron(int numIterations, int numSamples, double alpha)
+{
+	Perceptron perc = Perceptron(2, alpha);
+    perc.trainPerceptron(numIterations, numSamples, sube, open, close);
+    
+    int acierto = 0;
+    int error = 0;
+    cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
+    
+    for (int i = 50; i < numDatos; ++i)
+    {
+    	int comprobar = perc.validate(open[10], close[10]);
+    	if (sube[i] == comprobar)
+    	{
+    		acierto++;
+    	}
+    	else
+    	{
+    		error++;
+    	}
+    }
+    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+}
+
 int main(int argc, char* argv[]) 
 { 
     string nombreFicheroEntrada = argv[1];
@@ -78,19 +102,10 @@ int main(int argc, char* argv[])
 
         ficheroEntrada.close();
 
-        // Hacer cosas con los datos
-        int acierto = 0;
-        int error = 0;
-        for(int i = 0; i < numDatos; i ++)
-        {
-            cout << sube[i] << "," << open[i] << "," << close[i] << endl;
-        }
-
-        cout << "PRUEBAS: " <<endl;
-        // Perceptron perc = new Perceptron();
-        //Perceptron perc = new Perceptron(2, 0.33, 0.2);
-        // perc.trainPerceptron(1.2, 100, 10, sube, open, close);
-
+        /* * * * * * * * * * * * * * * *
+		 * ALGORITOMOS DE APRENDIZAJE  *
+         * * * * * * * * * * * * * * * */
+        perceptron(100, 10, 0.2);
     }
     else
     {
