@@ -8,9 +8,10 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
-int sube[5];
-double open[5];
-double close[5];
+int numDatos = 10;
+int sube[numDatos];
+double open[numDatos];
+double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
