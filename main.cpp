@@ -8,8 +8,8 @@ using namespace std;
 
 list<string> lineasProcesadas;
 const char delimiter = ',';
-std::string::size_type sz;     // alias of size_t
-const int numDatos = 20;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
+std::string::size_type sz;		// alias of size_t
+const int numDatos = 100;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
@@ -48,6 +48,30 @@ void procesarLinea(string linea, int numMuestra)
     }
 }
 
+void perceptron()
+{
+	Perceptron perc = Perceptron(2, 0.2);
+    perc.trainPerceptron(100, 50, sube, open, close);
+    
+    int acierto = 0;
+    int error = 0;
+    cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
+    
+    for (int i = 50; i < numDatos; ++i)
+    {
+    	int comprobar = perc.validate(open[10], close[10]);
+    	if (sube[i] == comprobar)
+    	{
+    		acierto++;
+    	}
+    	else
+    	{
+    		error++;
+    	}
+    }
+    cout << endl << "Aciertos: " << acierto << " Errores: " << error <<endl;
+}
+
 int main(int argc, char* argv[]) 
 { 
     string nombreFicheroEntrada = argv[1];
@@ -78,36 +102,10 @@ int main(int argc, char* argv[])
 
         ficheroEntrada.close();
 
-        // Hacer cosas con los datos
-        int acierto = 0;
-        int error = 0;
-        for(int i = 0; i < numDatos; i ++)
-        {
-            cout << sube[i] << "," << open[i] << "," << close[i] << endl;
-        }
-
-        cout << endl << "PRUEBAS: " <<endl;
-
-        Perceptron perc = Perceptron(2, 0.33, 0.5);
-        perc.trainPerceptron(1.2, 100, 15, sube, open, close);
-        
-        for (int i = 15; i < numDatos; ++i)
-        {
-        	int comprobar = perc.validate(open[10], close[10]);
-        	if (sube[i] == comprobar)
-        	{
-        		cout << "DIOS MIO HE ENTRENADO" << endl;
-        		acierto++;
-        	}
-        	else
-        	{
-        		cout << "SOY UN PERDEDOR" <<endl;
-        		error++;
-        	}
-        }
-        cout << endl << "Aciertos: " << acierto << " Errores: " << error <<endl;
-
-
+        /* * * * * * * * * * * * * * * *
+		 * ALGORITOMOS DE APRENDIZAJE  *
+         * * * * * * * * * * * * * * * */
+        perceptron();
     }
     else
     {
