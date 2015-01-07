@@ -8,9 +8,10 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
-int sube[5];
-double open[5];
-double close[5];
+int numDatos = 10;
+int sube[numDatos];
+double open[numDatos];
+double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
@@ -25,7 +26,8 @@ void procesarLinea(string linea, int numMuestra)
         if(linea[i] != delimiter)
         {
             aux += linea[i];
-        }else
+        }
+        else
         {
             switch(pos)
             {
@@ -67,7 +69,8 @@ int main(int argc, char* argv[])
 
                 numMuestra ++;
             } 
-        }else
+        }
+        else
         {
             cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
         }
@@ -80,7 +83,8 @@ int main(int argc, char* argv[])
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }
 
-    }else
+    }
+    else
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;

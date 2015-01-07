@@ -21,7 +21,8 @@ void procesarLinea(string linea)
         if(linea[i] != delimiter)
         {
             aux += linea[i];
-        }else
+        }
+        else
         {
             switch(pos)
             {
@@ -94,7 +95,8 @@ int main(int argc, char* argv[])
 
                 procesarLinea(cadena);
             } 
-        }else
+        }
+        else
         {
             cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
         }
@@ -110,11 +112,13 @@ int main(int argc, char* argv[])
                 // std::cout << *it << endl;
                 ficheroProcesado << *it << endl;
             }    
-        }else
+        }
+        else
         {
             cout << "ERROR: No se ha podido crear el fichero de salida" << endl;
         }
-    }else
+    }
+    else
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
