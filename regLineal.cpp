@@ -31,13 +31,13 @@ void procesarLinea(string linea, int numMuestra)
             switch(pos)
             {
                 case 0: sube[numMuestra] = stoi(aux, &sz);
-                break;
+                    break;
                 case 1: open[numMuestra] = stod(aux, &sz);
-                break;
+                    break;
                 case 2: close[numMuestra] = stod(aux, &sz);
-                break;
+                    break;
                 default:
-                break;
+                    break;
             }
 
             aux = "";
