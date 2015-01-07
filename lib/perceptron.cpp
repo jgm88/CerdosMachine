@@ -50,7 +50,7 @@ Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vO
 
 	}
 	//PRUEBAS
-	std::cout << std::endl;
+	std::cout << '\n' << "TRAINPERCEPTRON TEST\n";
 	std::cout << "vWeights[0] = " << vWeights[0] << '\n';
 	std::cout << "vWeights[1] = " << vWeights[1] << '\n';
 	std::cout << "threshold = " << threshold << '\n';

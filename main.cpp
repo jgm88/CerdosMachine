@@ -48,10 +48,10 @@ void procesarLinea(string linea, int numMuestra)
     }
 }
 
-void perceptron()
+void perceptron(int numIterations, int numSamples, double alpha)
 {
-	Perceptron perc = Perceptron(2, 0.2);
-    perc.trainPerceptron(100, 50, sube, open, close);
+	Perceptron perc = Perceptron(2, alpha);
+    perc.trainPerceptron(numIterations, numSamples, sube, open, close);
     
     int acierto = 0;
     int error = 0;
@@ -69,7 +69,7 @@ void perceptron()
     		error++;
     	}
     }
-    cout << endl << "Aciertos: " << acierto << " Errores: " << error <<endl;
+    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
 
 int main(int argc, char* argv[]) 
@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron();
+        perceptron(100, 10, 0.2);
     }
     else
     {
