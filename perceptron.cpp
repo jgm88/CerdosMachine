@@ -1,3 +1,5 @@
+//compilar -std=c++11
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -7,10 +9,11 @@ using namespace std;
 
 list<string> lineasProcesadas;
 const char delimiter = ',';
+const int tamLectura = 5;       //CAMBIAR EL VALOR LECTURA A VOLUNTAD
 std::string::size_type sz;     // alias of size_t
-int sube[5];
-double open[5];
-double close[5];
+int sube[tamLectura];
+double open[tamLectura];
+double close[tamLectura];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
@@ -31,13 +34,13 @@ void procesarLinea(string linea, int numMuestra)
             switch(pos)
             {
                 case 0: sube[numMuestra] = stoi(aux, &sz);
-                break;
+                    break;
                 case 1: open[numMuestra] = stod(aux, &sz);
-                break;
+                    break;
                 case 2: close[numMuestra] = stod(aux, &sz); 
-                break;
+                    break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
-                break;
+                    break;
             }
 
             aux = "";
@@ -60,7 +63,7 @@ int main(int argc, char* argv[])
 
         if(ficheroEntrada.is_open())
         {
-            while(!ficheroEntrada.eof() && numMuestra < 5)
+            while(!ficheroEntrada.eof() && numMuestra < tamLectura)
             {
                 getline(ficheroEntrada, cadena);
 
@@ -77,7 +80,9 @@ int main(int argc, char* argv[])
         ficheroEntrada.close();
 
         // Hacer cosas con los datos
-        for(int i = 0; i < 5; i ++)
+        int acierto = 0;
+        int error = 0;
+        for(int i = 0; i < tamLectura; i ++)
         {
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }
