@@ -1,15 +1,25 @@
+.PHONY= doc clean
+
 GCC=g++
-CFLAGS=-std=c++11
-INC_DIR=include/
-LIB_DIR=lib/
+OPTIONS= -g
+DEBUG= #-D DEBUG 
+CFLAGS= -std=c++11
+
+LIBDIR=lib
+INCLUDEDIR=include
 MAINFILE=main
 
-all: $(MAINFILE) 
+_OBJ= perceptron.o 
+OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
-$(MAINFILE): $(MAINFILE) perceptron.o
-	$(GCC) $(CFLAGS) $(MAINFILE).cpp -o $(MAINFILE) -I$(INC_DIR) -L$(LIB_DIR)
+main:    main.cpp $(OBJ)
+	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) main.cpp $(OBJ) -o main
 
-perceptron.o:	perceptron.h perceptron.cpp
-	$(GCC)	$(CFLAGS) perceptron.cpp
+$(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
+	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
 
+doc:
+	doxygen
 
+clean:
+	rm -f $(OBJ) 
