@@ -9,12 +9,14 @@ public:
     perceptron();
     ~perceptron();
 
+    trainPerceptron(float treshold);
+
 private:
 
     //pesos del perceptron
-    std::vector<double> vW;
+    std::vector<double> vWeights;
     //entradas del perceptron 
-    std::vector<double> vX;
+    std::vector<double> vInputs;
     //salida
     int y;
 
