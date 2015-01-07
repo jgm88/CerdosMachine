@@ -9,11 +9,11 @@ list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
 int sube[5];
-float open[5];
-float close[5];
-float pesos[3] = {0.33, 0.33, 0.33};
-float umbral;
-float coeficiente = 0.01;
+double open[5];
+double close[5];
+double pesos[3] = {0.33, 0.33, 0.33};
+double umbral;
+double coeficiente = 0.01;
 
 void procesarLinea(string linea, int numMuestra)
 {
@@ -31,9 +31,9 @@ void procesarLinea(string linea, int numMuestra)
             {
                 case 0: sube[numMuestra] = stoi(aux, &sz);
                 break;
-                case 1: open[numMuestra] = stof(aux, &sz);
+                case 1: open[numMuestra] = stod(aux, &sz);
                 break;
-                case 2: close[numMuestra] = stof(aux, &sz);
+                case 2: close[numMuestra] = stod(aux, &sz);
                 break;
                 default:
                 break;

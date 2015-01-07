@@ -13,7 +13,7 @@ void procesarLinea(string linea)
 {
     string aux = "";
     string auxLinea = "";
-    float open, high, low, close, volume = 0, maxSubMin;
+    double open, high, low, close, volume = 0, maxSubMin;
     int pos = 0;
 
     for (int i = 0; i < linea.size(); ++i)
@@ -118,6 +118,6 @@ int main(int argc, char* argv[])
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
-        cout << "./preprocesador salida.cvs" << endl;
+        cout << "./preprocesador salida.csv" << endl;
     }
 }
