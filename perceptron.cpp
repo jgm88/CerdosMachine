@@ -9,11 +9,11 @@ using namespace std;
 
 list<string> lineasProcesadas;
 const char delimiter = ',';
-const int tamLectura = 5;       //CAMBIAR EL VALOR LECTURA A VOLUNTAD
 std::string::size_type sz;     // alias of size_t
-int sube[tamLectura];
-double open[tamLectura];
-double close[tamLectura];
+const int numDatos = 10;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
+int sube[numDatos];
+double open[numDatos];
+double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
         if(ficheroEntrada.is_open())
         {
-            while(!ficheroEntrada.eof() && numMuestra < tamLectura)
+            while(!ficheroEntrada.eof() && numMuestra < numDatos)
             {
                 getline(ficheroEntrada, cadena);
 
@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
         // Hacer cosas con los datos
         int acierto = 0;
         int error = 0;
-        for(int i = 0; i < tamLectura; i ++)
+        for(int i = 0; i < numDatos; i ++)
         {
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }
