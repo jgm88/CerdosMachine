@@ -25,7 +25,8 @@ void procesarLinea(string linea, int numMuestra)
         if(linea[i] != delimiter && linea[i] != '\n')
         {
             aux += linea[i];
-        }else
+        }
+        else
         {
             switch(pos)
             {
@@ -67,7 +68,8 @@ int main(int argc, char* argv[])
 
                 numMuestra ++;
             } 
-        }else
+        }
+        else
         {
             cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
         }
@@ -79,7 +81,8 @@ int main(int argc, char* argv[])
             cout << sube[i] << "," << open[i] << "," << close[i] << endl;
         }
 
-    }else
+    }
+    else
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
