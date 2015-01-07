@@ -27,15 +27,15 @@ void procesarLinea(string linea)
             {
                 case 0: aux = "";
                 break;
-                case 1: open = stof(aux, &sz);
+                case 1: open = stod(aux, &sz);
                 break;
-                case 2: high = stof(aux, &sz);
+                case 2: high = stod(aux, &sz);
                 break;
-                case 3: low = stof(aux, &sz);
+                case 3: low = stod(aux, &sz);
                 break;
-                case 4: close = stof(aux, &sz);
+                case 4: close = stod(aux, &sz);
                 break;
-                case 5: volume = stof(aux, &sz); cout << "volume" << volume << endl;
+                case 5: volume = stod(aux, &sz); cout << "volume" << volume << endl;
                 break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                 break;
