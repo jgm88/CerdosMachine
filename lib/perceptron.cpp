@@ -24,28 +24,48 @@ Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vO
 	double open;
 	double close;
 	double output;
-
+	// std::vector<double> bestWeights;
+	// double bestThreshold=0;
+	// int numErrors;
+	// int oldNumErrors=numData;
+	
 	while(iterations > 0)
 	{
-		for (int i = 0; i < numData; ++i)
+		// numErrors= 0;
+		for (int i = 0; i < numData-1; ++i)
 		{
-			sClass = vClass[i];
+			sClass = vClass[i+1];
 			open = vOpen[i];
 			close = vClose[i];
 			output = 1;
 
-			if (((vWeights[0] * open + vWeights[1] * close) - threshold) < 0)
+			if (((vWeights[0] * open + vWeights[1] * close) -threshold) < 0)
 		  	{
-			  	output = 0;
+			  	output = -1;
 		  	}
 
 		  	if (output != sClass)
 		  	{
-		  		vWeights[0] += alpha * (sClass - output) * open / 2;
-		  		vWeights[1] += alpha * (sClass - output) * close / 2;
-		  		threshold +=  alpha * (sClass - output) * (-1) / 2;
+		  		vWeights[0] += alpha * (sClass - output) * open;
+		  		vWeights[1] += alpha * (sClass - output) * close;
+		  		threshold +=  alpha * (sClass - output) * (-1);
+		  		// ++numErrors;
 		  	}
 		}	
+		// for(int i=0; i< numData-1; ++i)
+		// {
+		// 	if(validate(vOpen[i],vClose[i]) != vClass[i+1])
+		// 		++numErrors;
+		// }
+		// Fallo en la comprobacion de los errores
+		// La recta actual tiene q mejorar la recta anteriorx
+		// if(oldNumErrors > numErrors)
+		// {
+		// 	std::cout << "Errores: Old "<< oldNumErrors << " new " << numErrors<< std::endl;
+		// 	bestWeights = vWeights;
+		// 	bestThreshold= threshold;
+		// 	oldNumErrors= numErrors;
+		// }
 		--iterations;
 
 	}
@@ -66,10 +86,10 @@ Perceptron::setAlpha(double newAlpha)
 int 
 Perceptron::validate(double open, double close)
 {
-	if (((vWeights[0] * open + vWeights[1] * close) - threshold) < 0)
+	if ((vWeights[0] * open + vWeights[1] * close)-threshold > 0)
 	{
-		return 0;
+		return 1;
 	}
 
-	return 1;
+	return -1;
 }

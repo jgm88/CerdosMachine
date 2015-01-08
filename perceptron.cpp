@@ -11,7 +11,7 @@ list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
 const int numDatos = 10;              //CAMBIAR EL VALOR LECTURA A VOLUNTAD
-int sube[numDatos];
+int sClass[numDatos];
 double open[numDatos];
 double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
@@ -33,7 +33,7 @@ void procesarLinea(string linea, int numMuestra)
         {
             switch(pos)
             {
-                case 0: sube[numMuestra] = stoi(aux, &sz);
+                case 0: sClass[numMuestra] = stoi(aux, &sz);
                     break;
                 case 1: open[numMuestra] = stod(aux, &sz);
                     break;
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
         int error = 0;
         for(int i = 0; i < numDatos; i ++)
         {
-            cout << sube[i] << "," << open[i] << "," << close[i] << endl;
+            cout << sClass[i] << "," << open[i] << "," << close[i] << endl;
         }
 
     }
