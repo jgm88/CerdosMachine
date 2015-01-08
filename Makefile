@@ -3,7 +3,7 @@
 CC=g++
 OPTIONS= -g 
 DEBUG= #-D DEBUG
-CFLAGS= -std=c++11
+CFLAGS= -std=c++11 -Wall
 LIBDIR=lib
 INCLUDEDIR=include
 _OBJ= perceptron.o
