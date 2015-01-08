@@ -2,10 +2,11 @@
 #include <fstream>
 #include <string.h>
 #include <list>
+#include <stack>
 
 using namespace std;
 
-list<string> lineasProcesadas;
+stack<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
 
@@ -36,7 +37,7 @@ void procesarLinea(string linea)
                     break;
                 case 4: close = stod(aux, &sz);
                     break;
-                case 5: volume = stod(aux, &sz); cout << "volume" << volume << endl;
+                case 5: volume = stod(aux, &sz); //cout << "volume" << volume << endl;
                     break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                     break;
@@ -48,7 +49,7 @@ void procesarLinea(string linea)
     }
 
     // cout << "LINEA: " << open << ", " << high << ", " << low << ", " << close << ", " << volume << ", " << endl;
-    cout << volume << endl;
+    // cout << volume << endl;
 
     maxSubMin = high - low;
     float openSubClose = open - close;
@@ -67,7 +68,7 @@ void procesarLinea(string linea)
     auxLinea += to_string(close);
     auxLinea += ",";
 
-    lineasProcesadas.push_back(auxLinea);
+    lineasProcesadas.push(auxLinea);
 }
 
 int main(int argc, char* argv[]) 
@@ -107,11 +108,12 @@ int main(int argc, char* argv[])
 
         if(ficheroProcesado.is_open())
         {
-            for (std::list<string>::iterator it = lineasProcesadas.begin(); it != lineasProcesadas.end(); ++ it)
+
+            while(!lineasProcesadas.empty())
             {
-                // std::cout << *it << endl;
-                ficheroProcesado << *it << endl;
-            }    
+                ficheroProcesado << lineasProcesadas.top()<< endl;
+                lineasProcesadas.pop();
+            }   
         }
         else
         {

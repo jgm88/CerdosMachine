@@ -24,28 +24,36 @@ Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vO
 	double open;
 	double close;
 	double output;
-
+	// int numErrores;
+	
 	while(iterations > 0)
 	{
-		for (int i = 0; i < numData; ++i)
+		// numErrores= 0;
+		for (int i = 0; i < numData-1; ++i)
 		{
-			sClass = vClass[i];
+			sClass = vClass[i+1];
 			open = vOpen[i];
 			close = vClose[i];
 			output = 1;
 
-			if (((vWeights[0] * open + vWeights[1] * close) - threshold) < 0)
+			if (((vWeights[0] * open + vWeights[1] * close) -threshold) < 0)
 		  	{
 			  	output = 0;
 		  	}
 
 		  	if (output != sClass)
 		  	{
-		  		vWeights[0] += alpha * (sClass - output) * open / 2;
-		  		vWeights[1] += alpha * (sClass - output) * close / 2;
-		  		threshold +=  alpha * (sClass - output) * (-1) / 2;
+		  		vWeights[0] += alpha * (sClass - output) * open;
+		  		vWeights[1] += alpha * (sClass - output) * close;
+		  		threshold +=  alpha * (sClass - output) * (-1);
 		  	}
 		}	
+
+		// for(int i=0; i< numData-1; ++i)
+		// {
+		// 	if(validate(vOpen[i],vClose[i]) != sClass[i+1])
+
+		// }
 		--iterations;
 
 	}
@@ -66,10 +74,10 @@ Perceptron::setAlpha(double newAlpha)
 int 
 Perceptron::validate(double open, double close)
 {
-	if (((vWeights[0] * open + vWeights[1] * close) - threshold) < 0)
+	if ((vWeights[0] * open + vWeights[1] * close)-threshold > 0)
 	{
-		return 0;
+		return 1;
 	}
 
-	return 1;
+	return 0;
 }

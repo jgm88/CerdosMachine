@@ -9,7 +9,7 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
-const int numDatos = 100;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
+const int numDatos = 200;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
@@ -50,19 +50,22 @@ void procesarLinea(string linea, int numMuestra)
 
 void perceptron(int numIterations, int numSamples, double alpha)
 {
-	Perceptron perc = Perceptron(2, alpha);
-    perc.trainPerceptron(numIterations, numSamples, sube, open, close);
-    
     int acierto = 0;
     int error = 0;
+	Perceptron perc = Perceptron(2, alpha);
+    perc.trainPerceptron(numIterations, numSamples, sube, open, close);
+    // prec.validate(oe)
+    if(perc.validate(open[180],close[180])== sube[181])
+    	cout << "predice!"<< endl;
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
-    
-    for (int i = 50; i < numDatos; ++i)
+    acierto= 0;
+    error=0;
+    for (int i = 179; i < numDatos; ++i)
     {
-    	int comprobar = perc.validate(open[10], close[10]);
-    	if (sube[i] == comprobar)
+    	int comprobar = perc.validate(open[i], close[i]);
+    	if (sube[i+1] == comprobar)
     	{
-    		acierto++;
+    		acierto++; 
     	}
     	else
     	{
@@ -105,7 +108,7 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron(100, 10, 0.2);
+        perceptron(500,180, 0.1);
     }
     else
     {
