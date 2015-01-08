@@ -1,0 +1,27 @@
+#include "linearRegression.h"
+
+LinearRegression::LinearRegression(){}
+LinearRegression::~LinearRegression(){}
+
+<<<<<<< HEAD
+LinearRegression::LinearRegression(int countX, float betaZero);
+{
+	srand(time(0));
+=======
+LinearRegression::LinearRegression(int countX, float betaZero)
+{
+	// srand(time(0));
+>>>>>>> master
+	this->betaZero = betaZero;
+	
+	//TODO CAMBIAR A VECTOR
+
+<<<<<<< HEAD
+	beta1 = (double)(rand()) / (double)RAND_MAX; 
+	beta2 = (double)(rand()) / (double)RAND_MAX;
+=======
+	// beta1 = (double)(rand()) / (double)RAND_MAX; 
+	// beta2 = (double)(rand()) / (double)RAND_MAX;
+>>>>>>> master
+    
+}
