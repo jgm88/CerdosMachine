@@ -7,7 +7,7 @@ CFLAGS= -std=c++11
 CGNUPLOT = -lboost_iostreams -lboost_system -lboost_filesystem
 LIBDIR=lib
 INCLUDEDIR=include
-_OBJ= *.o 
+_OBJ= perceptron.o linearRegression.o 
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
 all: machineLearning
