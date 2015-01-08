@@ -20,3 +20,4 @@ $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
 
 clean:
 	rm -f $(OBJ) 
+	rm main
