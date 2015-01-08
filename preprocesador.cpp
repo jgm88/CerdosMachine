@@ -54,7 +54,7 @@ void procesarLinea(string linea)
     maxSubMin = high - low;
     float openSubClose = open - close;
 
-    int sube = 0;
+    int sube = -1;
 
     if(openSubClose >= 0)
     {

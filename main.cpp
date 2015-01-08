@@ -60,7 +60,7 @@ void perceptron(int numIterations, int numSamples, double alpha)
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
     acierto= 0;
     error=0;
-    for (int i = 179; i < numDatos; ++i)
+    for (int i = 149; i < numDatos-1; ++i)
     {
     	int comprobar = perc.validate(open[i], close[i]);
     	if (sube[i+1] == comprobar)
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron(500,180, 0.1);
+        perceptron(500,150, 0.04);
     }
     else
     {
