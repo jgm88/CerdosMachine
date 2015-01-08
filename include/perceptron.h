@@ -25,7 +25,7 @@ private:
     int y;
     //valor constante aprendizaje learning rate 0<alpha<1
     double alpha;
-    double threshold;
+    double bias;
 
 };
 

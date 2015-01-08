@@ -3,7 +3,7 @@
 CC=g++
 OPTIONS= -g 
 DEBUG= #-D DEBUG
-CFLAGS= -std=c++11
+CFLAGS= -std=c++11 -Wall
 CGNUPLOT = -lboost_iostreams -lboost_system -lboost_filesystem
 LIBDIR=lib
 INCLUDEDIR=include
