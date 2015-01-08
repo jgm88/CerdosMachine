@@ -10,20 +10,20 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
-const int numDatos = 200;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
+const int numDatos = 250;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int sube[numDatos];
 double open[numDatos];
 double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
-
+std::vector< std::vector<double> > dataSet;
 void procesarLinea(string linea, int numMuestra)
 {
     string aux = "";
     int pos = 0;
 
-    for (int i = 0; i < linea.size(); ++ i)
+    for (unsigned int i = 0; i < linea.size(); ++ i)
     {
         if(linea[i] != delimiter)
         {
@@ -55,13 +55,13 @@ void perceptron(int numIterations, int numSamples, double alpha)
     int error = 0;
 	Perceptron perc = Perceptron(2, alpha);
     perc.trainPerceptron(numIterations, numSamples, sube, open, close);
-    // prec.validate(oe)
-    if(perc.validate(open[180],close[180])== sube[181])
-    	cout << "predice!"<< endl;
+
+    // if(perc.validate(open[180],close[180])== sube[181])
+    // 	cout << "predice!"<< endl;
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
     acierto= 0;
     error=0;
-    for (int i = 149; i < numDatos-1; ++i)
+    for (int i = 219; i < numDatos-1; ++i)
     {
     	int comprobar = perc.validate(open[i], close[i]);
     	if (sube[i+1] == comprobar)
@@ -81,9 +81,9 @@ int main(int argc, char* argv[])
     string nombreFicheroEntrada = argv[1];
     ifstream ficheroEntrada;
     string cadena;
-
+    int subConjunto= numDatos/5;
     int numMuestra = 0;
-
+    dataSet = std::vector< std::vector<double> > (5,std::vector<double>(subConjunto));
     if(argc == 2)
     {
         ficheroEntrada.open(nombreFicheroEntrada.c_str());
@@ -93,9 +93,8 @@ int main(int argc, char* argv[])
             while(!ficheroEntrada.eof() && numMuestra < numDatos)
             {
                 getline(ficheroEntrada, cadena);
-
                 procesarLinea(cadena, numMuestra);
-
+                
                 numMuestra ++;
             } 
         }
@@ -109,7 +108,7 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron(500,150, 0.04);
+        perceptron(500,220, 0.02);
     }
     else
     {

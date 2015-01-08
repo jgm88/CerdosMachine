@@ -3,19 +3,20 @@
 CC=g++
 OPTIONS= -g 
 DEBUG= #-D DEBUG
-CFLAGS= -std=c++11
+CFLAGS= -std=c++11 -Wall
+CGNUPLOT = -lboost_iostreams -lboost_system -lboost_filesystem
 LIBDIR=lib
 INCLUDEDIR=include
-_OBJ= perceptron.o
+_OBJ= perceptron.o linearRegression.o 
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
 all: machineLearning
 
 machineLearning:    main.cpp $(OBJ)
-	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) main.cpp $(OBJ) -o main
+	$(CC) $(CFLAGS) $(CGNUPLOT) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) main.cpp $(OBJ) -o main
 
 $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
-	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
+	$(CC) $(CFLAGS) $(CGNUPLOT) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
 
 clean:
 	rm -f $(OBJ) 
