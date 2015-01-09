@@ -1,5 +1,4 @@
-#include "perceptron.h"
-#include "linearRegression.h"
+#include "machineLearning.h" // colocar las librerias aki
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -11,7 +10,7 @@ list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
 const int numDatos = 250;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
-int sube[numDatos];
+int vClass[numDatos];
 double open[numDatos];
 double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
@@ -33,7 +32,7 @@ void procesarLinea(string linea, int numMuestra)
         {
             switch(pos)
             {
-                case 0: sube[numMuestra] = stoi(aux, &sz);
+                case 0: vClass[numMuestra] = stoi(aux, &sz);
                     break;
                 case 1: open[numMuestra] = stod(aux, &sz);
                     break;
@@ -54,9 +53,9 @@ void perceptron(int numIterations, int numSamples, double alpha)
     int acierto = 0;
     int error = 0;
 	Perceptron perc = Perceptron(2, alpha);
-    perc.trainPerceptron(numIterations, numSamples, sube, open, close);
+    perc.trainPerceptron(numIterations, numSamples, vClass, open, close);
 
-    // if(perc.validate(open[180],close[180])== sube[181])
+    // if(perc.validate(open[180],close[180])== vClass[181])
     // 	cout << "predice!"<< endl;
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
     acierto= 0;
@@ -64,7 +63,7 @@ void perceptron(int numIterations, int numSamples, double alpha)
     for (int i = 219; i < numDatos-1; ++i)
     {
     	int comprobar = perc.validate(open[i], close[i]);
-    	if (sube[i+1] == comprobar)
+    	if (vClass[i+1] == comprobar)
     	{
     		acierto++; 
     	}
@@ -75,7 +74,30 @@ void perceptron(int numIterations, int numSamples, double alpha)
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
+void logicalRegresion(int numIterations, int numSamples, double eta)
+{
+	int acierto;
+	int error;
+	LogicalRegresion lr = LogicalRegresion(eta, 2);
+	lr.train(numIterations, numSamples, vClass, open, close);
 
+	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
+    acierto= 0;
+    error=0;
+    for (int i = 219; i < numDatos-1; ++i)
+    {
+    	int comprobar = lr.validate(open[i], close[i]);
+    	if (vClass[i+1] == comprobar)
+    	{
+    		acierto++; 
+    	}
+    	else
+    	{
+    		error++;
+    	}
+    }
+    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+}
 int main(int argc, char* argv[]) 
 { 
     string nombreFicheroEntrada = argv[1];
@@ -109,6 +131,7 @@ int main(int argc, char* argv[])
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
         perceptron(500,220, 0.02);
+    	logicalRegresion(500, 220, 0.02);
     }
     else
     {
