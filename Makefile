@@ -19,5 +19,5 @@ $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
 	$(CC) $(CFLAGS) $(CGNUPLOT) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) 
 	rm main

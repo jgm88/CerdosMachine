@@ -1,4 +1,5 @@
 #include "perceptron.h"
+#include "linearRegression.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
