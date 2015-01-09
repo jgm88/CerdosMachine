@@ -73,6 +73,20 @@ void perceptron(int numIterations, int numSamples, double alpha)
     	}
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+
+  //   ofstream ficheroDatos;
+  //   ficheroDatos.open("fulldatos.dat");
+
+  //   for (float i = 26.5 ; i < 39.5; i+=0.01)
+  //   {
+		// for (float j = 26.5 ; j < 39.5; j+=0.01)
+  //   	{
+  //   		ficheroDatos << perc.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+  //   	}    	
+  //   }
+
+  //   ficheroDatos.close();
+
 }
 
 int main(int argc, char* argv[]) 
@@ -107,7 +121,7 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron(500,220, 0.02);
+        perceptron(5000,220, 0.02);
     }
     else
     {
