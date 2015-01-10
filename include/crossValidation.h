@@ -11,7 +11,7 @@ class CrossValidation
  	~CrossValidation();
 
  	void divide(int vClass[], double vOpen[], double vClose[]);
- 	void average(int vClass[], double vOpen[], double vClose[]);
+ 	void average(int vClass[], double vOpen[], double vClose[], int algorithm);
  private:
  	int k;
  	int numData;

@@ -39,6 +39,10 @@ CrossValidation::divide(int vClass[], double vOpen[], double vClose[])
 			trainOpen.push_back(vOpen[i]);
 			trainClose.push_back(vClose[i]);
 		}
+		
+		// Debug
+		// if(i == numData-1)
+		// 	std::cout << "|--> de " << initTest << " a " << endTest <<'\n';
 	}
 
 	if(index < k)
@@ -47,10 +51,14 @@ CrossValidation::divide(int vClass[], double vOpen[], double vClose[])
 		index = 1;
 }
 void 
-CrossValidation::average(int vClass[], double vOpen[], double vClose[])
+CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algorithm)
 {
-	int acierto = 0;
-    int error = 0;
+	// algorithm:
+	// 1 == Perceptron
+	// 2 == Regresion Lineal
+	// 3 == Regresion Logistica
+	// ...
+	Perceptron perc = Perceptron(2, 0.02);
 
     int cTrainClass[numDataTrain];
     double cTrainOpen[numDataTrain];
@@ -60,36 +68,60 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[])
     double cTestOpen[numDataTest];
     double cTestClose[numDataTest];
 
-    std::copy(trainClass.begin(), trainClass.end(), cTrainClass);
-    std::copy(trainOpen.begin(), trainOpen.end(), cTrainOpen);
-    std::copy(trainClose.begin(), trainClose.end(), cTrainClose);
-
-    std::copy(testClass.begin(), testClass.end(), cTestClass);
-    std::copy(testOpen.begin(), testOpen.end(), cTestOpen);
-    std::copy(testClose.begin(), testClose.end(), cTestClose);
-
-	Perceptron perc = Perceptron(2, 0.02);
-
+	int acierto = 0;
+    int error = 0;
+	
+	int aciertoTotal;
+	int errorTotal;
+	
 	for (int i = 0; i < k; ++i)
 	{
 		divide(vClass, vOpen, vClose);
-		perc.trainPerceptron(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
-	
+
+		std::copy(trainClass.begin(), trainClass.end(), cTrainClass);
+	    std::copy(trainOpen.begin(), trainOpen.end(), cTrainOpen);
+	    std::copy(trainClose.begin(), trainClose.end(), cTrainClose);
+
+	    std::copy(testClass.begin(), testClass.end(), cTestClass);
+	    std::copy(testOpen.begin(), testOpen.end(), cTestOpen);
+	    std::copy(testClose.begin(), testClose.end(), cTestClose);
+
+	    switch(algorithm)
+	    {
+	    	case 1:	perc.trainPerceptron(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
+	    		break;
+	    }
+		
+
 		acierto = 0;
 		error = 0;
-		for (int i = numData; i < numData-1; ++i)
+
+		for (int i = 0; i < numDataTest; ++i)
 		{
-			int comprobar = perc.validate(cTestOpen[i], cTestClose[i]);
-			if (cTestClass[i+1] == comprobar)
+			int check;
+			switch(algorithm)
 			{
-				acierto++; 
+				case 1: check = perc.validate(cTestOpen[i], cTestClose[i]);
+					break;
+				default: check = 0;
+			}
+
+			if (cTestClass[i+1] == check)
+			{
+				acierto++;
+				aciertoTotal++; 
 			}
 			else
 			{
 				error++;
+				errorTotal++;
 			}
 		}
-		std::cout << "Cross Validation con Perceptron" << i << "de " << k << '\n' ;
-		std::cout << "Aciertos: " << acierto << " Errores: " << error <<'\n';
+		std::cout << "--> Cross Validation con Perceptron, pasada " << i+1 << " de " << k << '\n' ;
+		std::cout << "--> Aciertos: " << acierto << " Errores: " << error <<'\n';
+		std::cout << '\n';
 	}
+	std::cout << "--------------------------------------------------------------------------\n";
+	std::cout << "- Media aciertos totales: " << aciertoTotal/k << " Media errores totales: " << errorTotal/k <<'\n';
+	std::cout << "--------------------------------------------------------------------------\n";
 }

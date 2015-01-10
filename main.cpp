@@ -159,10 +159,13 @@ int main(int argc, char* argv[])
          //CrossValidation(numAlgoritm);
         perceptron(500,220, 0.02);
     	logicalRegresion(500, 220, 0.02);
-        linearRegression(500, 220, 0.5);        
+        linearRegression(500, 220, 0.5);
+
+        CrossValidation cv = CrossValidation(5, 250);
+        cv.average(vClass, open, close, 1);    
     }
     else
-    {
+ ;   {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
         cout << "./perceptron datos.cvs" << endl;
