@@ -79,6 +79,7 @@ void logicalRegresion(int numIterations, int numSamples, double eta)
 	int acierto;
 	int error;
 	LogicalRegresion lr = LogicalRegresion(eta, 2);
+
 	lr.train(numIterations, numSamples, vClass, open, close);
 
 	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
@@ -95,6 +96,31 @@ void logicalRegresion(int numIterations, int numSamples, double eta)
     	{
     		error++;
     	}
+    }
+    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+}
+void linearRegression(int numIterations, int numSamples, double eta)
+{
+    int acierto;
+    int error;
+    LinearRegression lr = LinearRegression();
+
+    lr.train(numIterations, numSamples, open, close);
+
+    cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
+    acierto= 0;
+    error=0;
+    for (int i = 219; i < numDatos-1; ++i)
+    {
+        int comprobar = lr.validate(open[i], close[i]);
+        if (vClass[i+1] == comprobar)
+        {
+            acierto++; 
+        }
+        else
+        {
+            error++;
+        }
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
@@ -130,8 +156,10 @@ int main(int argc, char* argv[])
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
+         //CrossValidation(numAlgoritm);
         perceptron(500,220, 0.02);
     	logicalRegresion(500, 220, 0.02);
+        linearRegression(500, 220, 0.5);        
     }
     else
     {

@@ -1,17 +1,15 @@
 #include "linearRegression.h"
 
-LinearRegression::LinearRegression(){}
+LinearRegression::LinearRegression(){
+	betaZero = beta1 = error = 0;
+}
 LinearRegression::~LinearRegression(){}
 
-LinearRegression::LinearRegression(int countX, float betaZero)
+LinearRegression::LinearRegression(float betaZero)
 {
-	srand(time(0));
 	this->betaZero = betaZero;
 	
-	//TODO CAMBIAR A VECTOR
-
-	beta1 = (double)(rand()) / (double)RAND_MAX; 
-	beta2 = (double)(rand()) / (double)RAND_MAX;
+	beta1 = 0; 
     
 }
 void LinearRegression::setBetaZero(double newBetaZero){
@@ -19,42 +17,43 @@ void LinearRegression::setBetaZero(double newBetaZero){
 	this->betaZero = newBetaZero;
 }
 
-float LinearRegression::getY(double x1, double x2){
+float LinearRegression::validate(double x, double y){
 
-	//TODO return Y
-	return (x1*beta1 + x2 * beta2 + betaZero);
+	double yInLine = x * beta1 + betaZero;
+	if(y - yInLine > 0)
+		return 1;
+
+	return -1;
+
 }
 
 
-void LinearRegression::calculate(int iterations, int numData, float vY[], double vX1[], double vX2[]){
+void LinearRegression::train(int iterations, int numData, double vX[], double vY[]){
 
-	float y;
-	double x1;
-	double x2;
-	float resultPoint;
-   	double beta1;
-    double beta2;
+	double ySum = 0;
+	double xSum = 0;
+	double xySum =0;
+	double xSumSqr = 0;
 
 
-    while(iterations > 0)
-	{		
-		for (int i = 0; i < numData-1; ++i)
-		{
-			y = vY[i+1];
-			x1 = vX1[i];
-			x2 = vX2[i];
-			resultPoint = 0.5;
-
-		}
-		--iterations;
+		
+	for (int i = 0; i < numData-1; ++i)
+	{
+		ySum += vY[i];
+		xSum += vX[i];
+		xySum += vX[i] * vY[i];
+		xSumSqr += vX[i] * vX[i];
 	}
+
+	this->betaZero = ((ySum * xSumSqr) - (xSum * xySum)) / ((numData * xSumSqr) - (xSum * xSum));
+	this->beta1 = ((numData * xySum) - (xSum * ySum)) / ((numData * xSumSqr) - (xSum * xSum));
+
 	//for (i = 0; i < numData-1; ++i)
 	//recalcular para cada punto la desviacion de Y evaluando cada punto
 	// y ajustar la betaZero
 
 		std::cout << '\n' << "Recta Regresion";
 		std::cout << "beta1 = " << this->beta1 << '\n';
-		std::cout << "beta2 = " << this->beta2 << '\n';
 		std::cout << "BetaZero = " << this->betaZero << '\n';
 		std::cout << std::endl;	
 
