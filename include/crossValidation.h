@@ -1,7 +1,7 @@
 #ifndef CROSSVALIDATION_H
 #define CROSSVALIDATION_H
 
-#include "perceptron.h"
+#include "machineLearning.h"
 
 class CrossValidation
  {

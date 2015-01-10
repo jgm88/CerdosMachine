@@ -46,9 +46,13 @@ CrossValidation::divide(int vClass[], double vOpen[], double vClose[])
 	}
 
 	if(index < k)
+	{
 		++index;
+	}
 	else
+	{
 		index = 1;
+	}
 }
 void 
 CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algorithm)
@@ -59,6 +63,8 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 	// 3 == Regresion Logistica
 	// ...
 	Perceptron perc = Perceptron(2, 0.02);
+	LinearRegression linReg = LinearRegression();
+	// LogicalRegresion logReg = LogicalRegresion();
 
     int cTrainClass[numDataTrain];
     double cTrainOpen[numDataTrain];
@@ -68,11 +74,11 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
     double cTestOpen[numDataTest];
     double cTestClose[numDataTest];
 
-	int acierto = 0;
+	int right = 0;
     int error = 0;
 	
-	int aciertoTotal;
-	int errorTotal;
+	int rightTotal = 0;
+	int errorTotal = 0;
 	
 	for (int i = 0; i < k; ++i)
 	{
@@ -90,10 +96,14 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 	    {
 	    	case 1:	perc.trainPerceptron(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
 	    		break;
+    		case 2: linReg.train(500, numDataTrain, cTrainOpen, cTrainClose);
+	    		break;
+    		case 3://logReg.train(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
+	    		break;
 	    }
 		
 
-		acierto = 0;
+		right = 0;
 		error = 0;
 
 		for (int i = 0; i < numDataTest; ++i)
@@ -103,25 +113,29 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 			{
 				case 1: check = perc.validate(cTestOpen[i], cTestClose[i]);
 					break;
+				case 2: check = linReg.validate(cTestOpen[i], cTestClose[i]);
+	    			break;
+    			case 3:	//check = logReg.validate(cTestOpen[i], cTestClose[i]);
+	    			break;
 				default: check = 0;
 			}
 
 			if (cTestClass[i+1] == check)
 			{
-				acierto++;
-				aciertoTotal++; 
+				++right;
+				++rightTotal; 
 			}
 			else
 			{
-				error++;
-				errorTotal++;
+				++error;
+				++errorTotal;
 			}
 		}
 		std::cout << "--> Cross Validation con Perceptron, pasada " << i+1 << " de " << k << '\n' ;
-		std::cout << "--> Aciertos: " << acierto << " Errores: " << error <<'\n';
+		std::cout << "--> Aciertos: " << right << " Errores: " << error <<'\n';
 		std::cout << '\n';
 	}
 	std::cout << "--------------------------------------------------------------------------\n";
-	std::cout << "- Media aciertos totales: " << aciertoTotal/k << " Media errores totales: " << errorTotal/k <<'\n';
+	std::cout << "- Media aciertos totales: " << rightTotal/k << " Media errores totales: " << errorTotal/k <<'\n';
 	std::cout << "--------------------------------------------------------------------------\n";
 }
