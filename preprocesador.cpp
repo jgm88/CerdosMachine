@@ -72,7 +72,7 @@ void procesarLinea(string linea)
 
 int main(int argc, char* argv[]) 
 { 
-    string nombreFicheroEntrada = "hpq.csv";
+    string nombreFicheroEntrada = "sne.csv";
     
     ifstream ficheroDatos;
     ofstream ficheroProcesado;
