@@ -27,15 +27,10 @@ LogicalRegresion::train(int iterations, int numData, int vClass[], double vOpen[
 			gradient += (sClass * open) / (1 + exp(sClass * vWeights[0] * open));
 			gradient += (sClass * close) / (1 + exp(sClass * vWeights[1] * close));
 			gradient /= -1/ vWeights.size();
-
-			vWeights[0] -= eta * gradient;
-			vWeights[1] -= eta * gradient;
-			if(contador > 0){
-				--contador;
-				std::cout << "gradient: " << gradient << '\n';
-			}
 		}
-
+		vWeights[0] -= eta * gradient;
+		vWeights[1] -= eta * gradient;
+		gradient = 0;
 		--iterations;
 	}
 }
@@ -47,13 +42,13 @@ LogicalRegresion::setEta(double newEta)
 double 
 LogicalRegresion::probability(double open, double close)
 {
-	return ((vWeights[0] * open) + (vWeights[1] * close));
+	return (1 / (1 + exp((-1) * (vWeights[0] * open) + (vWeights[1] * close))));
 }
 int 
 LogicalRegresion::validate(double open, double close)
 {
-	std::cout << "Probabilidad Regresion Logistica: ";
-	std::cout << probability(open,close) <<'\n';
+	// std::cout << "Probabilidad Regresion Logistica: ";
+	// std::cout << probability(open,close) <<'\n';
 	if(probability(open, close) >= 0)
 		return 1;
 
