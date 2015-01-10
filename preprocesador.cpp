@@ -62,10 +62,11 @@ void procesarLinea(string linea)
     }
 
     auxLinea += to_string(sube);
-    auxLinea += "\t";
+    auxLinea += ",";
     auxLinea += to_string(open);
-    auxLinea += "\t";
+    auxLinea += ",";
     auxLinea += to_string(close);
+    auxLinea += ",";
 
     lineasProcesadas.push(auxLinea);
 }

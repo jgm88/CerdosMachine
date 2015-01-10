@@ -7,7 +7,7 @@
 using namespace std;
 
 list<string> lineasProcesadas;
-const char delimiter = '\t';
+const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
 const int numDatos = 100;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int vClass[numDatos];
@@ -47,6 +47,11 @@ void procesarLinea(string linea, int numMuestra)
             aux = "";
             pos ++;
         }
+    }
+
+    for (int i = 0; i < numDatos; ++i)
+    {
+    	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<open[i]<< ":::"<< "Close "<<close[i]<<endl;
     }
 }
 
@@ -103,7 +108,7 @@ void logisticRegression(int numIterations, int numSamples, double eta)
     for (int i = numTest; i < numDatos-1; ++i)
     {
     	int comprobar = lr.validate(open[i], close[i]);
-    	cout << "Clase :"<< vClass[i+1]<< endl;
+    	// cout << "Clase :"<< vClass[i+1]<< endl;
     	if (vClass[i+1] == comprobar)
     	{
     		acierto++; 

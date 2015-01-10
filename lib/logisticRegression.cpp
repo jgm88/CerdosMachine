@@ -41,7 +41,7 @@ LogisticRegression::train(int iterations, int numData, int vClass[], double vOpe
 		--iterations;
 	}
 
-	std::cout << "pesos Finales: "<< vWeights[0]<< " "<< vWeights[1]<< std::endl;
+	// std::cout << "pesos Finales: "<< vWeights[0]<< " "<< vWeights[1]<< std::endl;
 }
 
 double
@@ -71,8 +71,8 @@ LogisticRegression::probability(double open, double close)
 int 
 LogisticRegression::validate(double open, double close)
 {
-	std::cout << "Probabilidad Regresion Logistica: ";
-	std::cout << probability(open,close) <<'\t';
+	// std::cout << "Probabilidad Regresion Logistica: ";
+	// std::cout << probability(open,close) <<'\t';
 	if(probability(open, close) > 0.5)
 		return 1;
 
