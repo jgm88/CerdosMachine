@@ -18,7 +18,6 @@ double umbral = 0.5;
 double coeficiente = 0.01;
 int numTest= 229;
 int numTrain= 230;
-std::vector< std::vector<double> > dataSet;
 void procesarLinea(string linea, int numMuestra)
 {
     string aux = "";
@@ -145,50 +144,132 @@ void linearRegression(int numIterations, int numSamples, double eta)
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
+// Recive el puntero del fichero de entrada
+void lecturaFichero(ifstream* ficheroEntrada)
+{
+	string cadena="";
+	int numMuestra=0;
+	while(!ficheroEntrada->eof() && numMuestra < numDatos)
+	{
+	    getline((*ficheroEntrada), cadena);
+	    procesarLinea(cadena, numMuestra);
+	    
+	    numMuestra ++;
+	} 
+	ficheroEntrada->close();
+}
+void init(int tipoModelo, char useCV, int numIterations, double learningRate )
+{
+
+	switch(tipoModelo)
+    {
+    	case 1:
+
+    	case 2:
+    	case 3:
+    	case 4:
+    	default:
+    		cout << "ERROR: Tipo de modelo incorrecto"<< endl;
+    }
+}
+
+void menu()
+{
+	char tipoModelo ,useCV;
+	int numIterations=0,learningRate=0, modelo=0;
+	bool fail= false;
+	string nombreFicheroEntrada="";
+	ifstream ficheroEntrada;
+
+	cout << "*******MACHINE LEARNING*******"<< endl;
+	cout << "*******    by CPCr2    *******"<< endl;
+	do{
+		cout << "******************************"<< endl;
+		cout << "**Introduce ruta del fichero**"<< endl;
+		cin >> nombreFicheroEntrada ;
+		ficheroEntrada.open(nombreFicheroEntrada.c_str());
+		if(!ficheroEntrada.is_open())
+			fail= true;
+		else
+			lecturaFichero(&ficheroEntrada);
+	}while(fail);
+
+	do{
+		cout << "*************************************"<< endl;
+		cout << "**Introduce Modelo de entrenamiento**"<< endl;
+		cout << "[1] - Perceptron"<< endl;
+		cout << "[2] - Regresion Logistica"<< endl;
+		cout << "[3] - Regresion Lineal"<< endl;
+		cout << "[4] - Red Neuronal"<< endl;//??
+		cin >> tipoModelo;	
+		
+	}while(tipoModelo!='1' && tipoModelo!='2' && tipoModelo!='3' && tipoModelo!='4');
+	modelo= tipoModelo - '0';
+	cout << "*************************************"<< endl;
+	cout << "**Usar Cross-Validation[s/n]**"<< endl;
+	cin >> useCV;
+	if(useCV!='s' && useCV!='n') useCV='s';
+
+	cout << "**************************************"<< endl;
+	cout << "**Iteraciones para ajustar el modelo**"<< endl;
+	cout << "**Iteraciones Minimas: 100"<< endl;
+	cin >> numIterations;
+	if(numIterations<100) numIterations = 1000;
+
+	cout << "**************************************"<< endl;
+	cout << "**         Learning rate  **"<< endl;
+
+	cin>> learningRate;
+	if(learningRate > 5) learningRate= 0.5;
+
+}
+
+
+void initWithArgs(int argc, char* argv[])
+{
+	string nombreFicheroEntrada =argv[1];// ;
+	int tipoModelo=stoi(argv[2]);
+	string useCV= argv[3];
+	int numIterations= stoi(argv[4]);
+	double learningRate=stod(argv[5]) ;
+
+    ifstream ficheroEntrada;
+    ficheroEntrada.open(nombreFicheroEntrada.c_str());
+
+    if(ficheroEntrada.is_open())
+    {
+      lecturaFichero(&ficheroEntrada);
+    }
+    else
+    {
+        cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
+    }
+}
+
+
+
 int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraciones
 { 
-    string nombreFicheroEntrada = argv[1];
-    ifstream ficheroEntrada;
-    string cadena;
-    int subConjunto= numDatos/5;
-    int numMuestra = 0;
-    dataSet = std::vector< std::vector<double> > (5,std::vector<double>(subConjunto));
-    if(argc == 2)
+    if(argc >1)
     {
-        ficheroEntrada.open(nombreFicheroEntrada.c_str());
-
-        if(ficheroEntrada.is_open())
-        {
-            while(!ficheroEntrada.eof() && numMuestra < numDatos)
-            {
-                getline(ficheroEntrada, cadena);
-                procesarLinea(cadena, numMuestra);
-                
-                numMuestra ++;
-            } 
-        }
-        else
-        {
-            cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
-        }
-
-        ficheroEntrada.close();
-
+        initWithArgs(argc,argv);
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
          //CrossValidation(numAlgoritm);
-        perceptron(500,220, 0.02);
-    	logicalRegresion(500, 220, 0.02);
-        linearRegression(500, 220, 0.5);
+        perceptron(500,220, 0.2);
+    	logisticRegression(500, 220, 0.5);
+        linearRegression(500, 220, -1);
 
         CrossValidation cv = CrossValidation(5, 250);
         cv.average(vClass, open, close, 1);    
     }
     else
- ;   {
-        cout << "ERROR: Número de parámetros incorrecto." << endl;
-        cout << "Ejemplo de uso:" << endl;
-        cout << "./perceptron datos.cvs" << endl;
+    {
+    	menu();
+        // cout << "ERROR: Número de parámetros incorrecto." << endl;
+        // cout << "Ejemplo de uso:" << endl;
+        // cout << "./perceptron datos.cvs" << endl;
     }   
+    return 0;
 }
