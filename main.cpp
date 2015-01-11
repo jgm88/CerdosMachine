@@ -179,7 +179,7 @@ int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraci
          * * * * * * * * * * * * * * * */
          //CrossValidation(numAlgoritm);
         perceptron(500,220, 0.02);
-    	logicalRegresion(500, 220, 0.02);
+    	logicalRegresion(500, 220, 0.02)
         linearRegression(500, 220, 0.5);
 
         CrossValidation cv = CrossValidation(5, 250);
