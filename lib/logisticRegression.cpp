@@ -9,7 +9,7 @@ LogisticRegression::LogisticRegression(double newEta, int inputs)
 }
 
 void 
-LogisticRegression::train(int iterations, int numData, int vClass[], double vOpen[], double vClose[])
+LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose)
 {
 	int sClass;
 	double gradient;

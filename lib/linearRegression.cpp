@@ -28,7 +28,7 @@ float LinearRegression::validate(double x, double y){
 }
 
 
-void LinearRegression::train(int iterations, int numData, double vX[], double vY[]){
+void LinearRegression::train(int iterations, int numData,  std::vector<double> vX,std::vector<double> vY){
 
 	double ySum = 0;
 	double xSum = 0;

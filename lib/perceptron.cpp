@@ -18,7 +18,7 @@ Perceptron::Perceptron(int size, double newAlpha)
 }
 
 void
-Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vOpen[], double vClose[])
+Perceptron::train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose)
 {
 	int sClass;
 	double open;
