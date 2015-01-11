@@ -199,7 +199,7 @@ void menu()
 	if(numIterations<100) numIterations = 1000;
 
 	cout << "**************************************"<< endl;
-	cout << "**         Learning rate  **"<< endl;
+	cout << "**         Learning rate            **"<< endl;
 
 	cin>> learningRate;
 	if(learningRate > 5) learningRate= 0.5;
