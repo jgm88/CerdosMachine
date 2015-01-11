@@ -1,10 +1,13 @@
 #include "crossValidation.h"
 
 CrossValidation::CrossValidation(){}
-CrossValidation::CrossValidation(int newK, int newNumData)
+CrossValidation::CrossValidation(int newK, int newNumData, double newLearningRate, int newNumIterations)
 {
+
 	k = newK;
 	numData = newNumData;
+	learningRate = newLearningRate;
+	numIterations = newNumIterations;
 
  	numDataTest = numData / k;
  	numDataTrain = numData - numDataTest;
@@ -62,7 +65,7 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 	// 2 == Regresion Lineal
 	// 3 == Regresion Logistica
 	// ...
-	Perceptron perc = Perceptron(2, 0.02);
+	Perceptron perc = Perceptron(2, learningRate);
 	LinearRegression linReg = LinearRegression();
 	// LogicalRegresion logReg = LogicalRegresion();
 
@@ -94,11 +97,11 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 
 	    switch(algorithm)
 	    {
-	    	case 1:	perc.trainPerceptron(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
+	    	case 1:	perc.trainPerceptron(numIterations, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
 	    		break;
-    		case 2: linReg.train(500, numDataTrain, cTrainOpen, cTrainClose);
+    		case 2: linReg.train(numIterations, numDataTrain, cTrainOpen, cTrainClose);
 	    		break;
-    		case 3://logReg.train(500, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
+    		case 3://logReg.train(numIterations, numDataTrain, cTrainClass, cTrainOpen, cTrainClose);
 	    		break;
 	    }
 		
@@ -135,7 +138,9 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 		std::cout << "--> Aciertos: " << right << " Errores: " << error <<'\n';
 		std::cout << '\n';
 	}
+	int averangeRight = rightTotal / k;
+	int averageError = errorTotal / k;
 	std::cout << "--------------------------------------------------------------------------\n";
-	std::cout << "- Media aciertos totales: " << rightTotal/k << " Media errores totales: " << errorTotal/k <<'\n';
+	std::cout << "- Media aciertos totales: " << averangeRight << " Media errores totales: " << averageError <<'\n';
 	std::cout << "--------------------------------------------------------------------------\n";
 }
