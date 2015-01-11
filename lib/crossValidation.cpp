@@ -135,7 +135,9 @@ CrossValidation::average(int vClass[], double vOpen[], double vClose[], int algo
 		std::cout << "--> Aciertos: " << right << " Errores: " << error <<'\n';
 		std::cout << '\n';
 	}
+	int averangeRight = rightTotal / k;
+	int averageError = errorTotal / k;
 	std::cout << "--------------------------------------------------------------------------\n";
-	std::cout << "- Media aciertos totales: " << rightTotal/k << " Media errores totales: " << errorTotal/k <<'\n';
+	std::cout << "- Media aciertos totales: " << averangeRight << " Media errores totales: " << averageError <<'\n';
 	std::cout << "--------------------------------------------------------------------------\n";
 }
