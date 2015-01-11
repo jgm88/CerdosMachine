@@ -33,10 +33,12 @@ bool procesarLinea(string linea, int numMuestra)
                 	vClass.push_back(stoi(aux, &sz));
                     break;
                 case 1: //vOpen[numMuestra] = stod(aux, &sz);
+                	
                 	vOpen.push_back(stod(aux, &sz));
                     break;
                 case 2: //vClose[numMuestra] = stod(aux, &sz); 
-                	vClass.push_back(stod(aux, &sz));
+                	
+                	vClose.push_back(stod(aux, &sz));
                     break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                     break;
@@ -50,11 +52,6 @@ bool procesarLinea(string linea, int numMuestra)
     	isValida=true;
 
     return isValida;
-
-    // for (int i = 0; i < numDatos; ++i)
-    // {
-    // 	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<open[i]<< ":::"<< "Close "<<close[i]<<endl;
-    // }
 }
 
 // void perceptron(int numIterations, int numSamples, double alpha)
@@ -159,10 +156,14 @@ void lecturaFichero(ifstream* ficheroEntrada)
 	    	numMuestra ++;	
 	    
 	} 
+	for (int i = 0; i < vClass.size(); ++i)
+    {
+    	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<vOpen[i]<< ":::"<< "Close "<<vClose[i]<<endl;
+    }
 }
 void init(int tipoModelo, char useCV, int numIterations, double learningRate )
 {
-	CrossValidation cv(5,vClass.size(),learningRate,numIterations);
+	// CrossValidation cv(5,vClass.size(),learningRate,numIterations);
 	if(useCV=='s')
 	{
 		// cv.average(vClass,vOpen,vClose,tipoModelo);	
