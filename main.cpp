@@ -9,15 +9,15 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
-const int numDatos = 100;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
+const int numDatos = 251;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int vClass[numDatos];
 double open[numDatos];
 double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
-int numTest= 89;
-int numTrain= 90;
+int numTest= 229;
+int numTrain= 230;
 std::vector< std::vector<double> > dataSet;
 void procesarLinea(string linea, int numMuestra)
 {
@@ -49,10 +49,10 @@ void procesarLinea(string linea, int numMuestra)
         }
     }
 
-    for (int i = 0; i < numDatos; ++i)
-    {
-    	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<open[i]<< ":::"<< "Close "<<close[i]<<endl;
-    }
+    // for (int i = 0; i < numDatos; ++i)
+    // {
+    // 	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<open[i]<< ":::"<< "Close "<<close[i]<<endl;
+    // }
 }
 
 void perceptron(int numIterations, int numSamples, double alpha)
@@ -120,7 +120,32 @@ void logisticRegression(int numIterations, int numSamples, double eta)
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
-int main(int argc, char* argv[]) 
+void linearRegression(int numIterations, int numSamples, double eta)
+{
+    int acierto;
+    int error;
+    LinearRegression lr = LinearRegression();
+
+    lr.train(numIterations, numSamples, open, close);
+
+    cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
+    acierto= 0;
+    error=0;
+    for (int i = numTest; i < numDatos-1; ++i)
+    {
+        int comprobar = lr.validate(open[i], close[i]);
+        if (vClass[i+1] == comprobar)
+        {
+            acierto++; 
+        }
+        else
+        {
+            error++;
+        }
+    }
+    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+}
+int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraciones
 { 
     string nombreFicheroEntrada = argv[1];
     ifstream ficheroEntrada;
@@ -153,7 +178,9 @@ int main(int argc, char* argv[])
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
         perceptron(500,numTrain, 0.02);
-    	logisticRegression(500, numTrain, 0.0005);
+    	logisticRegression(5000, numTrain, 0.01);
+    	linearRegression(500,numTrain,0.002);
+
     }
     else
     {
