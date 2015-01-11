@@ -6,23 +6,19 @@
 
 using namespace std;
 
-list<string> lineasProcesadas;
 const char delimiter = ',';
-std::string::size_type sz;		// alias of size_t
-const int numDatos = 251;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
-int vClass[numDatos];
-double open[numDatos];
-double close[numDatos];
-double pesos[3] = {0.33, 0.33, 0.33};
-double umbral = 0.5;
-double coeficiente = 0.01;
-int numTest= 229;
-int numTrain= 230;
-void procesarLinea(string linea, int numMuestra)
+std::vector<int> vClass;
+std::vector<double> vOpen;
+std::vector<double> vClose;
+int numTest=229;
+int numTrain=230; 
+
+bool procesarLinea(string linea, int numMuestra)
 {
+	std::string::size_type sz;
     string aux = "";
     int pos = 0;
-
+    bool isValida= false;
     for (unsigned int i = 0; i < linea.size(); ++ i)
     {
         if(linea[i] != delimiter)
@@ -33,11 +29,14 @@ void procesarLinea(string linea, int numMuestra)
         {
             switch(pos)
             {
-                case 0: vClass[numMuestra] = stoi(aux, &sz);
+                case 0: //vClass[numMuestra] = stoi(aux, &sz);
+                	vClass.push_back(stoi(aux, &sz));
                     break;
-                case 1: open[numMuestra] = stod(aux, &sz);
+                case 1: //vOpen[numMuestra] = stod(aux, &sz);
+                	vOpen.push_back(stod(aux, &sz));
                     break;
-                case 2: close[numMuestra] = stod(aux, &sz); 
+                case 2: //vClose[numMuestra] = stod(aux, &sz); 
+                	vClass.push_back(stod(aux, &sz));
                     break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                     break;
@@ -47,6 +46,10 @@ void procesarLinea(string linea, int numMuestra)
             pos ++;
         }
     }
+    if(pos==3)
+    	isValida=true;
+
+    return isValida;
 
     // for (int i = 0; i < numDatos; ++i)
     // {
@@ -54,117 +57,120 @@ void procesarLinea(string linea, int numMuestra)
     // }
 }
 
-void perceptron(int numIterations, int numSamples, double alpha)
-{
-    int acierto = 0;
-    int error = 0;
-	Perceptron perc = Perceptron(2, alpha);
-    perc.trainPerceptron(numIterations, numSamples, vClass, open, close);
+// void perceptron(int numIterations, int numSamples, double alpha)
+// {
+//     int acierto = 0;
+//     int error = 0;
+// 	Perceptron perc = Perceptron(2, alpha);
+//     perc.trainPerceptron(numIterations, numSamples, vClass, vOpen, vClose);
 
-    // if(perc.validate(open[180],close[180])== vClass[181])
-    // 	cout << "predice!"<< endl;
-    cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = numTest; i < numDatos-1; ++i)
-    {
-    	int comprobar = perc.validate(open[i], close[i]);
-    	if (vClass[i+1] == comprobar)
-    	{
-    		acierto++; 
-    	}
-    	else
-    	{
-    		error++;
-    	}
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+//     // if(perc.validate(open[180],close[180])== vClass[181])
+//     // 	cout << "predice!"<< endl;
+//     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
+//     acierto= 0;
+//     error=0;
+//     for (int i = numTest; i < numDatos-1; ++i)
+//     {
+//     	int comprobar = perc.validate(vOpen[i], vClose[i]);
+//     	if (vClass[i+1] == comprobar)
+//     	{
+//     		acierto++; 
+//     	}
+//     	else
+//     	{
+//     		error++;
+//     	}
+//     }
+//     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 
-  //   ofstream ficheroDatos;
-  //   ficheroDatos.open("fulldatos.dat");
+//   //   ofstream ficheroDatos;
+//   //   ficheroDatos.open("fulldatos.dat");
 
-  //   for (float i = 26.5 ; i < 39.5; i+=0.01)
-  //   {
-		// for (float j = 26.5 ; j < 39.5; j+=0.01)
-  //   	{
-  //   		ficheroDatos << perc.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
-  //   	}    	
-  //   }
+//   //   for (float i = 26.5 ; i < 39.5; i+=0.01)
+//   //   {
+// 		// for (float j = 26.5 ; j < 39.5; j+=0.01)
+//   //   	{
+//   //   		ficheroDatos << perc.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+//   //   	}    	
+//   //   }
 
-  //   ficheroDatos.close();
+//   //   ficheroDatos.close();
 
-}
-void logisticRegression(int numIterations, int numSamples, double eta)
-{
-	int acierto;
-	int error;
-	LogisticRegression lr = LogisticRegression(eta, 2);
-	lr.train(numIterations, numSamples, vClass, open, close);
+// }
+// void logisticRegression(int numIterations, int numSamples, double eta)
+// {
+// 	int acierto;
+// 	int error;
+// 	LogisticRegression lr = LogisticRegression(eta, 2);
+// 	lr.train(numIterations, numSamples, vClass, vOpen, vClose);
 
-	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = numTest; i < numDatos-1; ++i)
-    {
-    	int comprobar = lr.validate(open[i], close[i]);
-    	// cout << "Clase :"<< vClass[i+1]<< endl;
-    	if (vClass[i+1] == comprobar)
-    	{
-    		acierto++; 
-    	}
-    	else
-    	{
-    		error++;
-    	}
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
-}
-void linearRegression(int numIterations, int numSamples, double eta)
-{
-    int acierto;
-    int error;
-    LinearRegression lr = LinearRegression();
+// 	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
+//     acierto= 0;
+//     error=0;
+//     for (int i = numTest; i < numDatos-1; ++i)
+//     {
+//     	int comprobar = lr.validate(vOpen[i], vClose[i]);
+//     	// cout << "Clase :"<< vClass[i+1]<< endl;
+//     	if (vClass[i+1] == comprobar)
+//     	{
+//     		acierto++; 
+//     	}
+//     	else
+//     	{
+//     		error++;
+//     	}
+//     }
+//     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+// }
+// void linearRegression(int numIterations, int numSamples, double eta)
+// {
+//     int acierto;
+//     int error;
+//     LinearRegression lr = LinearRegression();
 
-    lr.train(numIterations, numSamples, open, close);
+//     lr.train(numIterations, numSamples, vOpen, vClose);
 
-    cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = numTest; i < numDatos-1; ++i)
-    {
-        int comprobar = lr.validate(open[i], close[i]);
-        if (vClass[i+1] == comprobar)
-        {
-            acierto++; 
-        }
-        else
-        {
-            error++;
-        }
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
-}
+//     cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
+//     acierto= 0;
+//     error=0;
+//     for (int i = numTest; i < numDatos-1; ++i)
+//     {
+//         int comprobar = lr.validate(vOpen[i], vClose[i]);
+//         if (vClass[i+1] == comprobar)
+//         {
+//             acierto++; 
+//         }
+//         else
+//         {
+//             error++;
+//         }
+//     }
+//     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+// }
 // Recive el puntero del fichero de entrada
 void lecturaFichero(ifstream* ficheroEntrada)
 {
 	string cadena="";
 	int numMuestra=0;
-	while(!ficheroEntrada->eof() && numMuestra < numDatos)
+	while(!ficheroEntrada->eof())
 	{
 	    getline((*ficheroEntrada), cadena);
-	    procesarLinea(cadena, numMuestra);
+	    if(procesarLinea(cadena, numMuestra))
+	    	numMuestra ++;	
 	    
-	    numMuestra ++;
 	} 
-	ficheroEntrada->close();
 }
 void init(int tipoModelo, char useCV, int numIterations, double learningRate )
 {
-
+	CrossValidation cv(5,vClass.size(),learningRate,numIterations);
+	if(useCV=='s')
+	{
+		// cv.average(vClass,vOpen,vClose,tipoModelo);	
+	}
 	switch(tipoModelo)
     {
     	case 1:
-
+    		
     	case 2:
     	case 3:
     	case 4:
@@ -228,10 +234,10 @@ void menu()
 void initWithArgs(int argc, char* argv[])
 {
 	string nombreFicheroEntrada =argv[1];// ;
-	int tipoModelo=stoi(argv[2]);
-	string useCV= argv[3];
-	int numIterations= stoi(argv[4]);
-	double learningRate=stod(argv[5]) ;
+	// int tipoModelo=stoi(argv[2]);
+	// string useCV= argv[3];
+	// int numIterations= stoi(argv[4]);
+	// double learningRate=stod(argv[5]) ;
 
     ifstream ficheroEntrada;
     ficheroEntrada.open(nombreFicheroEntrada.c_str());
@@ -257,12 +263,12 @@ int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraci
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
          //CrossValidation(numAlgoritm);
-        perceptron(500,220, 0.2);
-    	logisticRegression(500, 220, 0.5);
-        linearRegression(500, 220, -1);
+     //    perceptron(500,220, 0.2);
+    	// logisticRegression(500, 220, 0.5);
+     //    linearRegression(500, 220, -1);
 
-        CrossValidation cv = CrossValidation(5, 250);
-        cv.average(vClass, open, close, 1);    
+        // CrossValidation cv = CrossValidation(5, 250);
+        // cv.average(vClass, open, close, 1);    
     }
     else
     {
