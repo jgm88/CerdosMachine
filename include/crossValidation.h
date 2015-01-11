@@ -1,7 +1,7 @@
 #ifndef CROSSVALIDATION_H
 #define CROSSVALIDATION_H
 
-#include "perceptron.h"
+#include "machineLearning.h"
 
 class CrossValidation
  {
@@ -11,7 +11,7 @@ class CrossValidation
  	~CrossValidation();
 
  	void divide(int vClass[], double vOpen[], double vClose[]);
- 	void average(int vClass[], double vOpen[], double vClose[]);
+ 	void average(int vClass[], double vOpen[], double vClose[], int algorithm);
  private:
  	int k;
  	int numData;

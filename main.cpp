@@ -177,13 +177,16 @@ int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraci
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
-        perceptron(500,numTrain, 0.02);
-    	logisticRegression(5000, numTrain, 0.01);
-    	linearRegression(500,numTrain,0.002);
+         //CrossValidation(numAlgoritm);
+        perceptron(500,220, 0.02);
+    	logicalRegresion(500, 220, 0.02);
+        linearRegression(500, 220, 0.5);
 
+        CrossValidation cv = CrossValidation(5, 250);
+        cv.average(vClass, open, close, 1);    
     }
     else
-    {
+ ;   {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
         cout << "./perceptron datos.cvs" << endl;
