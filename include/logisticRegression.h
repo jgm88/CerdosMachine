@@ -1,17 +1,18 @@
-#ifndef LOGICALREGRESION_H
-#define LOGICALREGRESION_H
+#ifndef LOGISTICREGRESSION_H
+#define LOGISTICREGRESSION_H
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
 #include <math.h>
 
-class LogicalRegresion
+class LogisticRegression
 {
 public:
-	LogicalRegresion();
-	~LogicalRegresion();
-	LogicalRegresion(double newEta, int inputs);
+	LogisticRegression();
+	~LogisticRegression();
+	LogisticRegression(double newEta, int inputs);
 
+	// double calculateCost(int numData, int vClass[], double vOpen[], double vClose[]);
 	void train(int iterations, int numData, int vClass[], double vOpen[], double vClose[]);
 	double probability(double open, double close);
 	int validate(double open, double close);

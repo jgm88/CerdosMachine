@@ -9,13 +9,15 @@ using namespace std;
 list<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;		// alias of size_t
-const int numDatos = 250;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
+const int numDatos = 251;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
 int vClass[numDatos];
 double open[numDatos];
 double close[numDatos];
 double pesos[3] = {0.33, 0.33, 0.33};
 double umbral = 0.5;
 double coeficiente = 0.01;
+int numTest= 229;
+int numTrain= 230;
 std::vector< std::vector<double> > dataSet;
 void procesarLinea(string linea, int numMuestra)
 {
@@ -46,6 +48,11 @@ void procesarLinea(string linea, int numMuestra)
             pos ++;
         }
     }
+
+    // for (int i = 0; i < numDatos; ++i)
+    // {
+    // 	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<open[i]<< ":::"<< "Close "<<close[i]<<endl;
+    // }
 }
 
 void perceptron(int numIterations, int numSamples, double alpha)
@@ -60,7 +67,7 @@ void perceptron(int numIterations, int numSamples, double alpha)
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
     acierto= 0;
     error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (int i = numTest; i < numDatos-1; ++i)
     {
     	int comprobar = perc.validate(open[i], close[i]);
     	if (vClass[i+1] == comprobar)
@@ -73,21 +80,35 @@ void perceptron(int numIterations, int numSamples, double alpha)
     	}
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
+
+  //   ofstream ficheroDatos;
+  //   ficheroDatos.open("fulldatos.dat");
+
+  //   for (float i = 26.5 ; i < 39.5; i+=0.01)
+  //   {
+		// for (float j = 26.5 ; j < 39.5; j+=0.01)
+  //   	{
+  //   		ficheroDatos << perc.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+  //   	}    	
+  //   }
+
+  //   ficheroDatos.close();
+
 }
-void logicalRegresion(int numIterations, int numSamples, double eta)
+void logisticRegression(int numIterations, int numSamples, double eta)
 {
 	int acierto;
 	int error;
-	LogicalRegresion lr = LogicalRegresion(eta, 2);
-
+	LogisticRegression lr = LogisticRegression(eta, 2);
 	lr.train(numIterations, numSamples, vClass, open, close);
 
 	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
     acierto= 0;
     error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (int i = numTest; i < numDatos-1; ++i)
     {
     	int comprobar = lr.validate(open[i], close[i]);
+    	// cout << "Clase :"<< vClass[i+1]<< endl;
     	if (vClass[i+1] == comprobar)
     	{
     		acierto++; 
@@ -110,7 +131,7 @@ void linearRegression(int numIterations, int numSamples, double eta)
     cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
     acierto= 0;
     error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (int i = numTest; i < numDatos-1; ++i)
     {
         int comprobar = lr.validate(open[i], close[i]);
         if (vClass[i+1] == comprobar)
@@ -124,7 +145,7 @@ void linearRegression(int numIterations, int numSamples, double eta)
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraciones
 { 
     string nombreFicheroEntrada = argv[1];
     ifstream ficheroEntrada;
