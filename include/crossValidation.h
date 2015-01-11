@@ -2,6 +2,7 @@
 #define CROSSVALIDATION_H
 
 #include "machineLearning.h"
+#include <string>
 
 class CrossValidation
  {

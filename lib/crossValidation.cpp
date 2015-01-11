@@ -67,8 +67,8 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	// ...
 	Perceptron perc = Perceptron(2, learningRate);
 	LinearRegression linReg = LinearRegression();
-	LogisticRegression logReg = LogisticRegression();
-
+	LogisticRegression logReg = LogisticRegression(learningRate,2);
+	std::string nomAlgo = "";
 	int right = 0;
     int error = 0;
 	
@@ -82,10 +82,13 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	    switch(algorithm)
 	    {
 	    	case 1:	perc.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
+	    		nomAlgo = "Perceptron";
 	    		break;
     		case 2: linReg.train(numIterations, numDataTrain, trainOpen, trainClose);
+    			nomAlgo = "Regresion Lineal";
 	    		break;
     		case 3:logReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
+    			nomAlgo = "Regresion Logistica";
 	    		break;
 	    }
 		
@@ -100,9 +103,9 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 			{
 				case 1: check = perc.validate(testOpen[i], testClose[i]);
 					break;
-				case 2: //check = linReg.validate(testOpen[i], testClose[i]);
+				case 2: check = linReg.validate(testOpen[i], testClose[i]);
 	    			break;
-    			case 3:	//check = logReg.validate(testOpen[i], testClose[i]);
+    			case 3:	check = logReg.validate(testOpen[i], testClose[i]);
 	    			break;
 				default: check = 0;
 			}
@@ -118,7 +121,8 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 				++errorTotal;
 			}
 		}
-		std::cout << "--> Cross Validation con Perceptron, pasada " << i+1 << " de " << k << '\n' ;
+
+		std::cout << "--> Cross Validation con "<< nomAlgo<<", pasada " << i+1 << " de " << k << '\n' ;
 		std::cout << "--> Aciertos: " << right << " Errores: " << error <<'\n';
 		std::cout << '\n';
 	}

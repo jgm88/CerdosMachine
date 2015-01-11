@@ -34,8 +34,6 @@ void LinearRegression::train(int iterations, int numData,  std::vector<double> v
 	double xSum = 0;
 	double xySum =0;
 	double xSumSqr = 0;
-
-
 		
 	for (int i = 0; i < numData-1; ++i)
 	{
@@ -52,9 +50,9 @@ void LinearRegression::train(int iterations, int numData,  std::vector<double> v
 	//recalcular para cada punto la desviacion de Y evaluando cada punto
 	// y ajustar la betaZero
 
-		std::cout << '\n' << "Recta Regresion";
-		std::cout << "beta1 = " << this->beta1 << '\n';
-		std::cout << "BetaZero = " << this->betaZero << '\n';
-		std::cout << std::endl;	
+		// std::cout << '\n' << "Recta Regresion";
+		// std::cout << "beta1 = " << this->beta1 << '\n';
+		// std::cout << "BetaZero = " << this->betaZero << '\n';
+		// std::cout << std::endl;	
 
 }

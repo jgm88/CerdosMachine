@@ -12,11 +12,11 @@ OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 all: machineLearning
 
 machineLearning:    main.cpp $(OBJ)
-	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) main.cpp $(OBJ) -o main
+	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -I$(INCLUDEDIR) main.cpp $(OBJ) -o cpcr2Machine
 
 $(LIBDIR)/%.o : $(LIBDIR)/%.cpp $(INCLUDEDIR)/%.h
 	$(CC) $(CFLAGS) $(OPTIONS) $(DEBUG) -c -I$(INCLUDEDIR) -o $@ $<
 
 clean:
 	rm -f $(OBJ) 
-	rm main
+	rm cpcr2Machine
