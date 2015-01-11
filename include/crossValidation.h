@@ -13,6 +13,7 @@ class CrossValidation
 
  	void divide(std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose);
  	void average(std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose, int algorithm);
+ 	int percentage(int right);
  private:
  	double learningRate;
  	int numIterations;

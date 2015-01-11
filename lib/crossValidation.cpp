@@ -3,7 +3,6 @@
 CrossValidation::CrossValidation(){}
 CrossValidation::CrossValidation(int newK, int newNumData, double newLearningRate, int newNumIterations)
 {
-
 	k = newK;
 	numData = newNumData;
 	learningRate = newLearningRate;
@@ -96,7 +95,7 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 		right = 0;
 		error = 0;
 
-		for (int i = 0; i < numDataTest; ++i)
+		for (int i = 0; i <=numDataTest; ++i)
 		{
 			int check;
 			switch(algorithm)
@@ -122,15 +121,24 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 			}
 		}
 
-		std::cout << "--> Cross Validation con "<< nomAlgo<<", pasada " << i+1 << " de " << k << '\n' ;
-		std::cout << "--> Aciertos: " << right << " Errores: " << error <<'\n';
-		std::cout << '\n';
+		std::cout << "--> Cross Validation con "<< nomAlgo<<", pasada " << i+1 << " de " << k << '\n' 
+				<< "--> Aciertos: " << right << " Errores: " << error <<'\n'
+				<< '\n';
 	}
 
 	int averangeRight = rightTotal / k;
 	int averageError = errorTotal / k;
 
-	std::cout << "--------------------------------------------------------------------------\n";
-	std::cout << "- Media aciertos totales: " << averangeRight << " Media errores totales: " << averageError <<'\n';
-	std::cout << "--------------------------------------------------------------------------\n";
+	int percentageRight = percentage(averangeRight);
+	int percentajeError = percentage(averageError);
+	
+		std::cout << "--------------------------------------------------------------------------\n"
+			<< "- Media aciertos totales: " << averangeRight << " Media errores totales: " << averageError <<'\n'
+			<< "- Porcentaje aciertos:    " << percentageRight << "%"<<"   Porcentaje errores: " << percentajeError <<"%" <<'\n'
+			<< "--------------------------------------------------------------------------\n";
+}
+
+int CrossValidation::percentage(int right)
+{
+	return ((right * 100) /numDataTest);	
 }
