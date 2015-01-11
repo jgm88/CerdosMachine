@@ -7,12 +7,15 @@ class CrossValidation
  {
  public:
  	CrossValidation();
- 	CrossValidation(int newK, int newNumData);
+ 	CrossValidation(int newK, int newNumData, double newLearningRate, int newNumIterations);
  	~CrossValidation();
 
  	void divide(int vClass[], double vOpen[], double vClose[]);
  	void average(int vClass[], double vOpen[], double vClose[], int algorithm);
  private:
+ 	double learningRate;
+ 	int numIterations;
+
  	int k;
  	int numData;
  	int numDataTest;
