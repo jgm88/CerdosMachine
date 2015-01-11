@@ -62,18 +62,18 @@ void procesarLinea(string linea)
     }
 
     auxLinea += to_string(sube);
-    auxLinea += delimiter;
+    auxLinea += "\t";
     auxLinea += to_string(open);
-    auxLinea += delimiter;
+    auxLinea += "\t";
     auxLinea += to_string(close);
-    auxLinea += ",";
+    // auxLinea += ",";
 
     lineasProcesadas.push(auxLinea);
 }
 
 int main(int argc, char* argv[]) 
 { 
-    string nombreFicheroEntrada = "hpq.csv";
+    string nombreFicheroEntrada = "sne.csv";
     
     ifstream ficheroDatos;
     ofstream ficheroProcesado;

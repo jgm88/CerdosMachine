@@ -14,7 +14,7 @@ public:
 //TODO CAMBIAR ENTRADAS A VECTOR
 
 	//con las Y y los regresores ajustaremos las betas
-    void train(int iterations, int numData, double vX[], double vY[]);
+    void train(int iterations, int numData, std::vector<double> vX,std::vector<double> vY);
     void setBetaZero(double newBetaZero);
     float validate(double x, double y);
 

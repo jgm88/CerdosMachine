@@ -1,3 +1,4 @@
 #include "perceptron.h"
-#include "logicalRegresion.h"
+#include "logisticRegression.h"
 #include "linearRegression.h"
+#include "crossValidation.h"

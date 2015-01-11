@@ -28,13 +28,13 @@ float LinearRegression::validate(double x, double y){
 }
 
 
-void LinearRegression::train(int iterations, int numData, double vX[], double vY[]){
+void LinearRegression::train(int iterations, int numData,  std::vector<double> vX,std::vector<double> vY){
 
 	double ySum = 0;
 	double xSum = 0;
 	double xySum =0;
 	double xSumSqr = 0;
-	
+		
 	for (int i = 0; i < numData-1; ++i)
 	{
 		ySum += vY[i];
@@ -48,6 +48,11 @@ void LinearRegression::train(int iterations, int numData, double vX[], double vY
 
 	//for (i = 0; i < numData-1; ++i)
 	//recalcular para cada punto la desviacion de Y evaluando cada punto
-	// y ajustar la betaZero	
+	// y ajustar la betaZero
+
+		// std::cout << '\n' << "Recta Regresion";
+		// std::cout << "beta1 = " << this->beta1 << '\n';
+		// std::cout << "BetaZero = " << this->betaZero << '\n';
+		// std::cout << std::endl;	
 
 }

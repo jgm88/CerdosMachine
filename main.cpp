@@ -6,22 +6,19 @@
 
 using namespace std;
 
-list<string> lineasProcesadas;
 const char delimiter = ',';
-std::string::size_type sz;		// alias of size_t
-const int numDatos = 250;		//CAMBIAR EL VALOR LECTURA A VOLUNTAD
-int vClass[numDatos];
-double open[numDatos];
-double close[numDatos];
-double pesos[3] = {0.33, 0.33, 0.33};
-double umbral = 0.5;
-double coeficiente = 0.01;
-std::vector< std::vector<double> > dataSet;
-void procesarLinea(string linea, int numMuestra)
+std::vector<int> vClass;
+std::vector<double> vOpen;
+std::vector<double> vClose;
+int numTest=0;
+int numTrain=0; 
+
+bool procesarLinea(string linea, int numMuestra)
 {
+	std::string::size_type sz;
     string aux = "";
     int pos = 0;
-
+    bool isValida= false;
     for (unsigned int i = 0; i < linea.size(); ++ i)
     {
         if(linea[i] != delimiter)
@@ -32,11 +29,16 @@ void procesarLinea(string linea, int numMuestra)
         {
             switch(pos)
             {
-                case 0: vClass[numMuestra] = stoi(aux, &sz);
+                case 0: //vClass[numMuestra] = stoi(aux, &sz);
+                	vClass.push_back(stoi(aux, &sz));
                     break;
-                case 1: open[numMuestra] = stod(aux, &sz);
+                case 1: //vOpen[numMuestra] = stod(aux, &sz);
+                	
+                	vOpen.push_back(stod(aux, &sz));
                     break;
-                case 2: close[numMuestra] = stod(aux, &sz); 
+                case 2: //vClose[numMuestra] = stod(aux, &sz); 
+                	
+                	vClose.push_back(stod(aux, &sz));
                     break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                     break;
@@ -46,125 +48,224 @@ void procesarLinea(string linea, int numMuestra)
             pos ++;
         }
     }
+    if(pos==3)
+    	isValida=true;
+
+    return isValida;
 }
 
-void perceptron(int numIterations, int numSamples, double alpha)
+void perceptron(int numIterations, double alpha)
 {
     int acierto = 0;
     int error = 0;
 	Perceptron perc = Perceptron(2, alpha);
-    perc.trainPerceptron(numIterations, numSamples, vClass, open, close);
+    perc.train(numIterations, numTrain, vClass, vOpen, vClose);
 
-    // if(perc.validate(open[180],close[180])== vClass[181])
-    // 	cout << "predice!"<< endl;
     cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (unsigned int i = numTest; i < vClass.size()-1; ++i)
     {
-    	int comprobar = perc.validate(open[i], close[i]);
+    	int comprobar = perc.validate(vOpen[i], vClose[i]);
     	if (vClass[i+1] == comprobar)
-    	{
     		acierto++; 
-    	}
     	else
-    	{
     		error++;
-    	}
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
-void logicalRegresion(int numIterations, int numSamples, double eta)
+void logisticRegression(int numIterations, double eta)
 {
-	int acierto;
-	int error;
-	LogicalRegresion lr = LogicalRegresion(eta, 2);
-
-	lr.train(numIterations, numSamples, vClass, open, close);
+	int acierto=0;
+	int error=0;
+	LogisticRegression lr = LogisticRegression(eta, 2);
+	lr.train(numIterations, numTrain, vClass, vOpen, vClose);
 
 	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (unsigned int i = numTest; i < vClose.size()-1; ++i)
     {
-    	int comprobar = lr.validate(open[i], close[i]);
+    	int comprobar = lr.validate(vOpen[i], vClose[i]);
     	if (vClass[i+1] == comprobar)
-    	{
     		acierto++; 
-    	}
     	else
-    	{
     		error++;
-    	}
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
-void linearRegression(int numIterations, int numSamples, double eta)
+void linearRegression(int numIterations, double eta)
 {
-    int acierto;
-    int error;
+    int acierto=0;
+    int error=0;
     LinearRegression lr = LinearRegression();
 
-    lr.train(numIterations, numSamples, open, close);
+    lr.train(numIterations, numTrain, vOpen, vClose);
 
     cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
-    acierto= 0;
-    error=0;
-    for (int i = 219; i < numDatos-1; ++i)
+    for (unsigned int i = numTest; i < vClose.size()-1; ++i)
     {
-        int comprobar = lr.validate(open[i], close[i]);
+        int comprobar = lr.validate(vOpen[i], vClose[i]);
         if (vClass[i+1] == comprobar)
-        {
             acierto++; 
-        }
         else
-        {
             error++;
-        }
     }
     cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
 }
-int main(int argc, char* argv[]) 
-{ 
-    string nombreFicheroEntrada = argv[1];
+// Recive el puntero del fichero de entrada
+void lecturaFichero(ifstream* ficheroEntrada)
+{
+	string cadena="";
+	int numMuestra=0;
+	while(!ficheroEntrada->eof())
+	{
+	    getline((*ficheroEntrada), cadena);
+	    if(procesarLinea(cadena, numMuestra))
+	    	numMuestra ++;	
+	    
+	} 
+
+	numTrain= vClass.size()-30;
+	numTest= vClass.size()-31;
+	// for (int i = 0; i < vClass.size(); ++i)
+	// {
+	// 	cout<< "Clase "<< vClass[i]<< ":::"<< "Open "<<vOpen[i]<< ":::"<< "Close "<<vClose[i]<<endl;
+	// }
+}
+void init(int tipoModelo, char useCV, int numIterations, double learningRate )
+{
+	CrossValidation cv(5,vClass.size(),learningRate,numIterations);
+	if(useCV=='s')
+		cv.average(vClass,vOpen,vClose,tipoModelo);	
+	else
+		switch(tipoModelo)
+	    {
+	    	case 1:
+	    		perceptron(numIterations,learningRate);
+	    		break;
+	    	case 2:
+	    		linearRegression(numIterations,learningRate);
+	    		break;
+	    	case 3:
+	    		logisticRegression(numIterations,learningRate);
+	    		break;
+	    	case 4:
+	    	break;
+	    	default:
+	    		cout << "ERROR: Tipo de modelo incorrecto"<< endl;
+	    		break;
+	    }
+    // cv.average(vClass,vOpen,vClose,1);
+}
+
+void menu()
+{
+	char tipoModelo ,useCV;
+	int numIterations=0,learningRate=0, modelo=0;
+	bool fail= false;
+	string nombreFicheroEntrada="";
+	ifstream ficheroEntrada;
+
+	cout << "*******MACHINE LEARNING*******"<< endl;
+	cout << "*******    by CPCr2    *******"<< endl;
+	do{
+		cout << "******************************"<< endl;
+		cout << "**Introduce ruta del fichero**"<< endl;
+		cin >> nombreFicheroEntrada ;
+		ficheroEntrada.open(nombreFicheroEntrada.c_str());
+		if(!ficheroEntrada.is_open())
+			fail= true;
+		else
+			lecturaFichero(&ficheroEntrada);
+	}while(fail);
+
+	do{
+		cout << "*************************************"<< endl;
+		cout << "**Introduce Modelo de entrenamiento**"<< endl;
+		cout << "[1] - Perceptron"<< endl;
+		cout << "[2] - Regresion Logistica"<< endl;
+		cout << "[3] - Regresion Lineal"<< endl;
+		cout << "[4] - Red Neuronal"<< endl;//??
+		cin >> tipoModelo;	
+		
+	}while(tipoModelo!='1' && tipoModelo!='2' && tipoModelo!='3' && tipoModelo!='4');
+	modelo= tipoModelo - '0';
+	cout << "*************************************"<< endl;
+	cout << "**Usar Cross-Validation[s/n]**"<< endl;
+	cin >> useCV;
+	if(useCV!='s' && useCV!='n') useCV='s';
+
+	cout << "**************************************"<< endl;
+	cout << "**Iteraciones para ajustar el modelo**"<< endl;
+	cout << "**Iteraciones Minimas: 100"<< endl;
+	cin >> numIterations;
+	if(numIterations<100) numIterations = 1000;
+
+	cout << "**************************************"<< endl;
+	cout << "**         Learning rate  **"<< endl;
+
+	cin>> learningRate;
+	if(learningRate > 5) learningRate= 0.5;
+
+	init(modelo,useCV, numIterations, learningRate );
+}
+
+
+void initWithArgs(int argc, char* argv[])
+{
+	string nombreFicheroEntrada =argv[1];// ;
+	int tipoModelo=stoi(argv[2]);
+	string useCV= argv[3];
+	int numIterations= stoi(argv[4]);
+	double learningRate=stod(argv[5]) ;
+
     ifstream ficheroEntrada;
-    string cadena;
-    int subConjunto= numDatos/5;
-    int numMuestra = 0;
-    dataSet = std::vector< std::vector<double> > (5,std::vector<double>(subConjunto));
-    if(argc == 2)
+    ficheroEntrada.open(nombreFicheroEntrada.c_str());
+
+    if(ficheroEntrada.is_open())
     {
-        ficheroEntrada.open(nombreFicheroEntrada.c_str());
+      lecturaFichero(&ficheroEntrada);
+    }
+    else
+    {
+        cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
+    }
+    init(tipoModelo,useCV[0],numIterations,learningRate);
+}
 
-        if(ficheroEntrada.is_open())
-        {
-            while(!ficheroEntrada.eof() && numMuestra < numDatos)
-            {
-                getline(ficheroEntrada, cadena);
-                procesarLinea(cadena, numMuestra);
-                
-                numMuestra ++;
-            } 
-        }
-        else
-        {
-            cout << "ERROR: " << nombreFicheroEntrada << " no encontrado" << endl;
-        }
-
-        ficheroEntrada.close();
-
+int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraciones
+{ 
+	if(argc == 6)
+    {
+        initWithArgs(argc,argv);
         /* * * * * * * * * * * * * * * *
 		 * ALGORITOMOS DE APRENDIZAJE  *
          * * * * * * * * * * * * * * * */
          //CrossValidation(numAlgoritm);
-        perceptron(500,220, 0.02);
-    	logicalRegresion(500, 220, 0.02);
-        linearRegression(500, 220, 0.5);        
+     //    perceptron(500,220, 0.2);
+    	// logisticRegression(500, 220, 0.5);
+     //    linearRegression(500, 220, -1);
+
+        // CrossValidation cv = CrossValidation(5, 250);
+        // cv.average(vClass, open, close, 1);    
     }
     else
     {
-        cout << "ERROR: Número de parámetros incorrecto." << endl;
-        cout << "Ejemplo de uso:" << endl;
-        cout << "./perceptron datos.cvs" << endl;
+    	menu();
+        // cout << "ERROR: Número de parámetros incorrecto." << endl;
+        // cout << "Ejemplo de uso:" << endl;
+        // cout << "./perceptron datos.cvs" << endl;
     }   
+    return 0;
 }
+
+//Crear un fichero con un rango de puntos para plotear
+  //   ofstream ficheroDatos;
+  //   ficheroDatos.open("fulldatos.dat");
+
+  //   for (float i = 26.5 ; i < 39.5; i+=0.01)
+  //   {
+		// for (float j = 26.5 ; j < 39.5; j+=0.01)
+  //   	{
+  //   		ficheroDatos << perc.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+  //   	}    	
+  //   }
+
+  //   ficheroDatos.close();

@@ -18,20 +18,19 @@ Perceptron::Perceptron(int size, double newAlpha)
 }
 
 void
-Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vOpen[], double vClose[])
+Perceptron::train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose)
 {
 	int sClass;
 	double open;
 	double close;
 	double output;
-	std::vector<double> bestWeights (vWeights.size(),0);
-	double bestbias=0;
-	int numErrors;
-	int oldNumErrors=0;
+	// std::vector<double> bestWeights (vWeights.size(),0);
+	// double bestbias=0;
+	// int numErrors;
+	// int oldNumErrors=0;
 	
 	while(iterations > 0)
 	{
-		numErrors= 0;
 		for (int i = 0; i < numData-1; ++i)
 		{
 			sClass = vClass[i+1];
@@ -49,31 +48,10 @@ Perceptron::trainPerceptron(int iterations, int numData, int vClass[], double vO
 		  		vWeights[0] += alpha * (sClass - output) * open;
 		  		vWeights[1] += alpha * (sClass - output) * close;
 		  		bias +=  alpha * (sClass - output) * (-1);
-		  		++numErrors;
 		  	}
 		}	
-		
-		// Fallo en la comprobacion de los errores
-		// La recta actual tiene q mejorar la recta anteriorx
-		// if(oldNumErrors == numErrors)
-		// {
-		// 	bestWeights = vWeights;
-		// 	bestbias= bias;
-		// 	oldNumErrors= numErrors;
-		// }
-		// oldNumErrors= numErrors;
 		--iterations;
-
 	}
-
-	// vWeights = bestWeights;
-	// bias = bestbias;
-
-	std::cout << '\n' << "TRAINPERCEPTRON TEST\n";
-	std::cout << "vWeights[0] = " << vWeights[0] << '\n';
-	std::cout << "vWeights[1] = " << vWeights[1] << '\n';
-	std::cout << "bias = " << bias << '\n';
-	std::cout << std::endl;
 }
 
 void 
@@ -92,3 +70,11 @@ Perceptron::validate(double open, double close)
 
 	return -1;
 }
+
+
+
+	// std::cout << '\n' << "TRAINPERCEPTRON TEST\n";
+	// std::cout << "vWeights[0] = " << vWeights[0] << '\n';
+	// std::cout << "vWeights[1] = " << vWeights[1] << '\n';
+	// std::cout << "bias = " << bias << '\n';
+	// std::cout << std::endl;
