@@ -10,8 +10,8 @@ class CrossValidation
  	CrossValidation(int newK, int newNumData, double newLearningRate, int newNumIterations);
  	~CrossValidation();
 
- 	void divide(int vClass[], double vOpen[], double vClose[]);
- 	void average(int vClass[], double vOpen[], double vClose[], int algorithm);
+ 	void divide(std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose);
+ 	void average(std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose, int algorithm);
  private:
  	double learningRate;
  	int numIterations;

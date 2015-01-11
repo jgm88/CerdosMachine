@@ -163,10 +163,10 @@ void lecturaFichero(ifstream* ficheroEntrada)
 }
 void init(int tipoModelo, char useCV, int numIterations, double learningRate )
 {
-	// CrossValidation cv(5,vClass.size(),learningRate,numIterations);
+	CrossValidation cv(5,vClass.size(),learningRate,numIterations);
 	if(useCV=='s')
 	{
-		// cv.average(vClass,vOpen,vClose,tipoModelo);	
+		//cv.average(vClass,vOpen,vClose,tipoModelo);	
 	}
 	switch(tipoModelo)
     {
@@ -178,6 +178,7 @@ void init(int tipoModelo, char useCV, int numIterations, double learningRate )
     	default:
     		cout << "ERROR: Tipo de modelo incorrecto"<< endl;
     }
+    cv.average(vClass,vOpen,vClose,1);
 }
 
 void menu()
@@ -229,6 +230,7 @@ void menu()
 	cin>> learningRate;
 	if(learningRate > 5) learningRate= 0.5;
 
+	init(tipoModelo,useCV, numIterations, learningRate );
 }
 
 
