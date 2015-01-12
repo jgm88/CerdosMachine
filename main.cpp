@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const char delimiter = ',';
+const char delimiter = '\t';
 std::vector<int> vClass;
 std::vector<double> vOpen;
 std::vector<double> vClose;
@@ -15,7 +15,7 @@ int numTrain=0;
 
 bool procesarLinea(string linea, int numMuestra)
 {
-	std::string::size_type sz;
+	std::string::size_type sz;    
     string aux = "";
     int pos = 0;
     bool isValida= false;
@@ -30,15 +30,15 @@ bool procesarLinea(string linea, int numMuestra)
             switch(pos)
             {
                 case 0: //vClass[numMuestra] = stoi(aux, &sz);
-                	vClass.push_back(stoi(aux, &sz));
+                	vClass.push_back(stoi(aux, &sz));                                    
                     break;
                 case 1: //vOpen[numMuestra] = stod(aux, &sz);
                 	
-                	vOpen.push_back(stod(aux, &sz));
+                	vOpen.push_back(stod(aux, &sz));                    
                     break;
                 case 2: //vClose[numMuestra] = stod(aux, &sz); 
                 	
-                	vClose.push_back(stod(aux, &sz));
+                	vClose.push_back(stod(aux, &sz));                    
                     break;
                 default: cout << "Demasiados argumentos en el documento" << endl;
                     break;
