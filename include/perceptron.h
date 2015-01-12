@@ -10,8 +10,7 @@ public:
     Perceptron();
     Perceptron(int size, double alpha);
     ~Perceptron();
-
-    void trainPerceptron(int iterations, int numData, int vClass[], double vOpen[], double vClose[]);
+    void train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
     void setAlpha(double newAlpha);
     int validate(double open, double close);
 
