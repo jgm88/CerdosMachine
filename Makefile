@@ -1,12 +1,12 @@
 .PHONY= clean
 
 CC=g++
-OPTIONS= -g 
+OPTIONS= -g -O2 -DARMA_DONT_USE_WRAPPER -lblas -llapack
 DEBUG= #-D DEBUG
 CFLAGS= -std=c++11 -Wall
 LIBDIR=lib
 INCLUDEDIR=include
-_OBJ= perceptron.o linearRegression.o logisticRegression.o crossValidation.o
+_OBJ= perceptron.o linearRegression.o logisticRegression.o multiLinearRegression.o crossValidation.o
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
 all: machineLearning
