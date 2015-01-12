@@ -73,15 +73,15 @@ void procesarLinea(string linea)
 
 int main(int argc, char* argv[]) 
 { 
-    string nombreFicheroEntrada = "sne.csv";
-    
+        
     ifstream ficheroDatos;
     ofstream ficheroProcesado;
     string cadena;
     
-    if(argc == 2)
+    if(argc == 3)
     {
-        string nombreFicheroSalida = argv[1];
+        string nombreFicheroEntrada = argv[1];
+        string nombreFicheroSalida = argv[2];
 
         ficheroDatos.open(nombreFicheroEntrada.c_str());
 
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
             {
                 getline(ficheroDatos, cadena);
 
-                procesarLinea(cadena);
+                procesarLinea(cadena+=",");
             } 
         }
         else
@@ -124,6 +124,6 @@ int main(int argc, char* argv[])
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
-        cout << "./preprocesador data/salida.data" << endl;
+        cout << "./preprocesador data/entrada.csv data/salida.data" << endl;
     }
 }
