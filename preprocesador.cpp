@@ -124,6 +124,6 @@ int main(int argc, char* argv[])
     {
         cout << "ERROR: Número de parámetros incorrecto." << endl;
         cout << "Ejemplo de uso:" << endl;
-        cout << "./preprocesador salida.csv" << endl;
+        cout << "./preprocesador data/salida.data" << endl;
     }
 }
