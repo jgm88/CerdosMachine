@@ -226,8 +226,11 @@ void NeuralNetwork::feedForward(const vector<double> &inputVals)
     }
 }
 
-NeuralNetwork::NeuralNetwork(const vector<unsigned> &topology, double newEta, double newAlpha)
+NeuralNetwork::NeuralNetwork(double newAlpha)
 {
+    topology.push_back(2);
+    topology.push_back(1);
+
     m_recentAverageSmoothingFactor = 100.0;
     unsigned numLayers = topology.size();
 
@@ -238,7 +241,7 @@ NeuralNetwork::NeuralNetwork(const vector<unsigned> &topology, double newEta, do
 
         for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; ++neuronNum) 
         {
-            m_layers.back().push_back(Neuron(numOutputs, neuronNum, newEta, newAlpha));
+            m_layers.back().push_back(Neuron(numOutputs, neuronNum, 0.15, newAlpha));
         }
 
         m_layers.back().back().setOutputVal(1.0);

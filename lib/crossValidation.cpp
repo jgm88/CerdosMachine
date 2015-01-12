@@ -59,14 +59,19 @@ CrossValidation::divide(std::vector<int> vClass, std::vector<double> vOpen, std:
 void 
 CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose, int algorithm)
 {
-	// algorithm:
-	// 1 == Perceptron
-	// 2 == Regresion Lineal
-	// 3 == Regresion Logistica
-	// ...
+	/*	
+		algorithm:
+		1 == Perceptron
+		2 == Regresion Lineal
+		3 == Regresion Logistica
+		4 == Red Neuronal
+	*/
+
 	Perceptron perc = Perceptron(2, learningRate);
 	LinearRegression linReg = LinearRegression();
 	LogisticRegression logReg = LogisticRegression(learningRate,2);
+	NeuralNetwork neuNet = NeuralNetwork(learningRate);
+
 	std::string nomAlgo = "";
 	int right = 0;
     int error = 0;
@@ -81,13 +86,16 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	    switch(algorithm)
 	    {
 	    	case 1:	perc.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
-	    		nomAlgo = "Perceptron";
+	    			nomAlgo = "Perceptron";
 	    		break;
     		case 2: linReg.train(numIterations, numDataTrain, trainOpen, trainClose);
-    			nomAlgo = "Regresion Lineal";
+    				nomAlgo = "Regresion Lineal";
 	    		break;
-    		case 3:logReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
-    			nomAlgo = "Regresion Logistica";
+    		case 3:	logReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
+    				nomAlgo = "Regresion Logistica";
+	    		break;
+	    	case 4:	neuNet.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
+	    			nomAlgo = "Red Neuronal";
 	    		break;
 	    }
 		
@@ -105,6 +113,8 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 				case 2: check = linReg.validate(testOpen[i], testClose[i]);
 	    			break;
     			case 3:	check = logReg.validate(testOpen[i], testClose[i]);
+	    			break;
+	    		case 4:	check = neuNet.validate(testOpen[i], testClose[i]);
 	    			break;
 				default: check = 0;
 			}
