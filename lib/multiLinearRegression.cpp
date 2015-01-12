@@ -11,8 +11,8 @@ void train(int iterations, int numData, std::vector<int> vClass, std::vector<dou
 
 	mat Y = eye<mat>(3, 1);
 
-	// //Obtenemos la traspuesta
-	// mat Xt = X.t();
+	//Obtenemos la traspuesta
+	mat Xt = X.t();
 
 	// //traspuesta por original
 	// mat XtX = Xt * X;
