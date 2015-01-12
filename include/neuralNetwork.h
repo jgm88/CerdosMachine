@@ -18,8 +18,6 @@ public:
     TrainingData(const string filename);
     bool isEof(void) { return m_trainingDataFile.eof(); }
     void getTopology(vector<unsigned> &topology);
-
-    // Returns the number of input values read from the file:
     unsigned getNextInputs(vector<double> &inputVals);
     unsigned getTargetOutputs(vector<double> &targetOutputVals);
 
@@ -33,12 +31,10 @@ struct Connection
     double deltaWeight;
 };
 
-
 class Neuron;
 
 typedef vector<Neuron> Layer;
 
-// ****************** class Neuron ******************
 class Neuron
 {
 public:
@@ -51,8 +47,8 @@ public:
     void updateInputWeights(Layer &prevLayer);
 
 private:
-    double eta;   // [0.0..1.0] overall net training rate
-    double alpha; // [0.0..n] multiplier of last weight change (momentum)
+    double eta;  
+    double alpha; 
     static double transferFunction(double x);
     static double transferFunctionDerivative(double x);
     static double randomWeight(void) { return rand() / double(RAND_MAX); }
@@ -63,10 +59,10 @@ private:
     double m_gradient;
 };
 
-class Net
+class NeuralNetwork
 {
 public:
-    Net(const vector<unsigned> &topology, double newEta, double newAlpha);
+    NeuralNetwork(const vector<unsigned> &topology, double newEta, double newAlpha);
     void feedForward(const vector<double> &inputVals);
     void backProp(const vector<double> &targetVals);
     void getResults(vector<double> &resultVals) const;
@@ -78,7 +74,7 @@ private:
     vector<Layer> m_layers; // m_layers[layerNum][neuronNum]
     double m_error;
     double m_recentAverageError;
-    static double m_recentAverageSmoothingFactor;
+    double m_recentAverageSmoothingFactor;
 };
 
 #endif
