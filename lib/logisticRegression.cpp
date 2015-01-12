@@ -13,7 +13,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 {
 	int sClass;
 	double oldEta=eta;
-	double gradient;
+	// double gradient;
 	double J,oldJ=0;
 	double peso0=0,peso1=0;
 	vWeights[0]=0,vWeights[1]=0;
@@ -26,7 +26,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 			// std::cout << "iterations "<< iterations << " Soy mayor"<< std::endl;
 
 		peso0=peso1=0;
-		gradient=0;
+		// gradient=0;
 		for (int i = 0; i < numData-1; ++i)
 		{
 			// la clase que entre esta definida con -1 y 1
