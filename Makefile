@@ -6,7 +6,7 @@ DEBUG= #-D DEBUG
 CFLAGS= -std=c++11 -Wall
 LIBDIR=lib
 INCLUDEDIR=include
-_OBJ= perceptron.o linearRegression.o logisticRegression.o multiLinearRegression.o crossValidation.o
+_OBJ= perceptron.o linearRegression.o logisticRegression.o multiLinearRegression.o crossValidation.o neuralNetwork.o
 OBJ = $(patsubst %,$(LIBDIR)/%,$(_OBJ))
 
 all: machineLearning
