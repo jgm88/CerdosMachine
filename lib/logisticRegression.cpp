@@ -12,14 +12,21 @@ void
 LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen, std::vector<double> vClose)
 {
 	int sClass;
-	// double gradient;
-	double J;
+	double oldEta=eta;
+	double gradient;
+	double J,oldJ=0;
 	double peso0=0,peso1=0;
+	vWeights[0]=0,vWeights[1]=0;
 	while(iterations > 0)//0 && !isMinErr )
 	{
 		J= calculateCost(numData,vClass,vOpen,vClose);
-		std::cout << "Coste de iteracion "<< iterations<< ": "<< J <<std::endl;
+		// std::cout << "Coste de iteracion "<< iterations<< ": "<< J <<std::endl;
+		if(oldJ<J)
+			eta/=100;
+			// std::cout << "iterations "<< iterations << " Soy mayor"<< std::endl;
+
 		peso0=peso1=0;
+		gradient=0;
 		for (int i = 0; i < numData-1; ++i)
 		{
 			// la clase que entre esta definida con -1 y 1
@@ -29,18 +36,23 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 			peso0+= (probability(vOpen[i],vClose[i])-sClass)*vOpen[i];
 			peso1+= (probability(vOpen[i],vClose[i])-sClass)*vClose[i];
 
-
-
 			// Formula de Yaser para minimizar el Error
 			// gradient += (double)(sClass * vOpen[i]) / (1 + exp(sClass * vWeights[0] * vOpen[i]));
 			// gradient += (double)(sClass * vClose[i]) / (1 + exp(sClass * vWeights[1] * vClose[i]));
 		}
 		// gradient *= (double)-1/ (numData-1);
-		vWeights[0] -= eta*(peso0/(numData-1));
-		vWeights[1] -= eta*(peso0/(numData-1));
+		vWeights[0] -= eta*(peso0/double(numData-1));
+		vWeights[1] -= eta*(peso1/double(numData-1));
 
+		// vWeights[0] -= eta*(gradient/double(numData-1));
+		// vWeights[1] -= eta*(gradient/double(numData-1));
+
+		oldJ=J;
 		--iterations;
 	}
+	eta= oldEta;
+	// std::cout << "Peso0 " << vWeights[0] << std::endl;
+	// std::cout << "Peso1 "<< vWeights[1] << std::endl; 
 }
 void 
 LogisticRegression::setEta(double newEta)
@@ -50,7 +62,7 @@ LogisticRegression::setEta(double newEta)
 double 
 LogisticRegression::probability(double open, double close)
 {
-	return (1 / (1 + exp((-1) * (vWeights[0] * open) + (vWeights[1] * close))));
+	return (double) (1 / (1 + exp((-1.0) * (vWeights[0] * open) + (vWeights[1] * close))));
 }
 int 
 LogisticRegression::validate(double open, double close)
@@ -73,6 +85,6 @@ LogisticRegression::calculateCost(int numData,std::vector<int> vClass, std::vect
 		dClass = (vClass[i+1]+1)/2;
 		cost +=dClass * log(probability(vOpen[i],vClose[i])) + (1 - dClass) *  log(1 - probability(vOpen[i],vClose[i]));
 	}
-	cost = (double) (-1/(numData-1)) * cost;
+	cost *= (-1/ double (numData-1));
 	return cost;
 }

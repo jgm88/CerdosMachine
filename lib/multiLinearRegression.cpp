@@ -15,7 +15,7 @@ void train(int iterations, int numData, std::vector<int> vClass, std::vector<dou
 	mat Xt = X.t();
 
 	// //traspuesta por original
-	// mat XtX = Xt * X;
+	mat XtX = Xt * X;
 
 	//Calculamos la inversa de X*Xt
 	// mat invXtX = XtX.i(); 

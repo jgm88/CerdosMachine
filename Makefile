@@ -1,7 +1,7 @@
 .PHONY= clean
 
 CC=g++
-OPTIONS= -g -O2 -DARMA_DONT_USE_WRAPPER -lblas -llapack
+OPTIONS= -g -O3 -DARMA_DONT_USE_WRAPPER -larmadillo -lblas -llapack
 DEBUG= #-D DEBUG
 CFLAGS= -std=c++11 -Wall
 LIBDIR=lib
