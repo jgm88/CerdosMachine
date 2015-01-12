@@ -1,12 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
-#include <list>
-#include <stack>
+#include <vector>
 
 using namespace std;
 
-stack<string> lineasProcesadas;
+std::vector<string> lineasProcesadas;
 const char delimiter = ',';
 std::string::size_type sz;     // alias of size_t
 
@@ -69,7 +68,7 @@ void procesarLinea(string linea)
     auxLinea += "\t";
     // auxLinea += ",";
 
-    lineasProcesadas.push(auxLinea);
+    lineasProcesadas.push_back(auxLinea);
 }
 
 int main(int argc, char* argv[]) 
@@ -108,11 +107,10 @@ int main(int argc, char* argv[])
         if(ficheroProcesado.is_open())
         {
 
-            while(!lineasProcesadas.empty())
+            for (std::vector<string>::iterator i = lineasProcesadas.begin(); i != lineasProcesadas.end(); ++i)
             {
-                ficheroProcesado << lineasProcesadas.top()<< endl;
-                lineasProcesadas.pop();
-            }   
+                ficheroProcesado << *i << endl;
+            }
         }
         else
         {
