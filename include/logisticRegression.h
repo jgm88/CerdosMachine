@@ -12,7 +12,7 @@ public:
 	~LogisticRegression();
 	LogisticRegression(double newEta, int inputs);
 
-	// double calculateCost(int numData, int vClass[], double vOpen[], double vClose[]);
+	double calculateCost(int numData,std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
 	void train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
 	double probability(double open, double close);
 	int validate(double open, double close);
