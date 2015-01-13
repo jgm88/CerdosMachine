@@ -20,13 +20,6 @@ Perceptron::Perceptron(int size, double newAlpha)
 void
 Perceptron::train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose)
 {
-	// Renicio de pesos
-	srand(time(0));
-	double numRandom = (double)(rand()) / (double)RAND_MAX;
-	vWeights.push_back(numRandom);
-	numRandom = (double)(rand()) / (double)RAND_MAX;
-	vWeights.push_back(numRandom);
-
 	int sClass;
 	double open;
 	double close;
