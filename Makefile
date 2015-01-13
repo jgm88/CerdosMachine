@@ -24,6 +24,7 @@ preprocesador:
 clean:
 	rm -f $(OBJ) 
 	rm cpcr2Machine
+	rm plot/*.data
 clean-p:
 	rm preprocesador
 	rm preprocesadorFran
