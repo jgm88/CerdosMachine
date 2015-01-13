@@ -25,7 +25,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 	init();
 	int sClass;
 	double diference=this->eta;
-	// double gradient;
+	double gradient;
 	bool isEnd=false;
 	int maybeConverg=0;
 	double J,oldJ=std::numeric_limits<double>::max();
@@ -41,8 +41,10 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 
 		if(diference<this->threshold && maybeConverg==2)
 		{
-			isEnd=true;	
+			// isEnd=true;	
 			std::cout<< "HE convergido en iteracion: "<<iterations<< std::endl;
+			pesosGood;
+			w0=pesoWGood;
 		} 
 
 		else
@@ -57,9 +59,8 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 					maybeConverg=0;
 
 
-				vWeights= pesosGood;
-				w0=pesoWGood;
-				std::cout << "iterations "<< iterations << " Soy mayor reajusto eta"<< std::endl;
+				vWeights= 
+				// std::cout << "iterations "<< iterations << " Soy mayor reajusto eta"<< std::endl;
 			}
 			else
 			{
@@ -70,22 +71,24 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 					// la clase que entre esta definida con -1 y 1
 					// hacemos la siguiente operaciones para definirla entre 0 y 1
 					sClass = (vClass[i+1]+1)/2; 
-					pesosW+= (sigmoid(vOpen[i],vClose[i])-sClass);
-					peso0+= (sigmoid(vOpen[i],vClose[i])-sClass)*vOpen[i];
-					peso1+= (sigmoid(vOpen[i],vClose[i])-sClass)*vClose[i];
+					// pesosW+= (sigmoid(vOpen[i],vClose[i])-sClass);
+					// peso0+= (sigmoid(vOpen[i],vClose[i])-sClass)*vOpen[i];
+					// peso1+= (sigmoid(vOpen[i],vClose[i])-sClass)*vClose[i];
 
 					// Formula de Yaser para minimizar el Error
-					// gradient += (double)(sClass * vOpen[i]) / (1 + exp(sClass * vWeights[0] * vOpen[i]));
-					// gradient += (double)(sClass * vClose[i]) / (1 + exp(sClass * vWeights[1] * vClose[i]));
+					gradient += (double)(sClass) / (1 + exp(sClass * w0));
+					gradient += (double)(sClass * vOpen[i]) / (1 + exp(sClass * vWeights[0] * vOpen[i]));
+					gradient += (double)(sClass * vClose[i]) / (1 + exp(sClass * vWeights[1] * vClose[i]));
 				}
 				// gradient *= (double)-1/ (numData-1);
-				this->w0 -= this->eta*(pesosW/double(numData-1));
-				this->vWeights[0] -= eta*(peso0/double(numData-1));
-				this->vWeights[1] -= eta*(peso1/double(numData-1));
+				// this->w0 -= this->eta*(pesosW/double(numData-1));
+				// this->vWeights[0] -= eta*(peso0/double(numData-1));
+				// this->vWeights[1] -= eta*(peso1/double(numData-1));
+				this->w0 -= eta*(gradient/double(numData-1));
+				vWeights[0] -= eta*(gradient/double(numData-1));
+				vWeights[1] -= eta*(gradient/double(numData-1));
 				pesosGood=vWeights;
 				pesoWGood= w0;
-				// vWeights[0] -= eta*(gradient/double(numData-1));
-				// vWeights[1] -= eta*(gradient/double(numData-1));
 				
 			}
 
