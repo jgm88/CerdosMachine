@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <math.h>
+#include <limits>
 
 class LogisticRegression
 {
@@ -23,5 +24,6 @@ private:
 	double eta;
 	double w0;
 	double oldEta;
+	double threshold;
 };
 #endif
