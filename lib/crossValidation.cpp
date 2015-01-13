@@ -169,7 +169,7 @@ void CrossValidation::drawByFlood(Perceptron p){
     string sFile;
 
 	stringstream ssFile;
-	ssFile << "plot/perceptronFlood" << index << ".data";
+	ssFile << "plot/pFlood" << index << ".data";
 
     file.open(ssFile.str());
 
@@ -188,7 +188,7 @@ void CrossValidation::drawByFlood(LinearRegression linR){
     string sFile;
 
 	stringstream ssFile;
-	ssFile << "plot/linearRegressionFlood" << index << ".data";
+	ssFile << "plot/linrFlood" << index << ".data";
 
     file.open(ssFile.str());
 
@@ -208,7 +208,7 @@ void CrossValidation::drawByFlood(LogisticRegression logR){
     string sFile;
 
 	stringstream ssFile;
-	ssFile << "plot/logisticRegressionFlood" << index << ".data";
+	ssFile << "plot/logrFlood" << index << ".data";
 
     file.open(ssFile.str());
 
@@ -228,7 +228,7 @@ void CrossValidation::drawByFlood(NeuralNetwork nn){
     string sFile;
 
 	stringstream ssFile;
-	ssFile << "plot/neuralNetworkFlood" << index << ".data";
+	ssFile << "plot/nnFlood" << index << ".data";
 
     file.open(ssFile.str());
 
