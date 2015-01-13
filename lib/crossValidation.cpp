@@ -73,11 +73,11 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	NeuralNetwork neuNet = NeuralNetwork(learningRate);
 
 	std::string nomAlgo = "";
-	int right = 0;
-    int error = 0;
+	float right = 0;
+    float error = 0;
 	
-	int rightTotal = 0;
-	int errorTotal = 0;
+	float rightTotal = 0;
+	float errorTotal = 0;
 	
 	for (int i = 0; i < k; ++i)
 	{
@@ -87,15 +87,27 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	    {
 	    	case 1:	perc.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
 	    			nomAlgo = "Perceptron";
+	    			if(sDraw.isOn){
+	    				drawByFlood(perc);
+	    			}	
 	    		break;
     		case 2: linReg.train(numIterations, numDataTrain, trainOpen, trainClose);
     				nomAlgo = "Regresion Lineal";
+	    			if(sDraw.isOn){
+	    				drawByFlood(linReg);
+	    			}	
 	    		break;
     		case 3:	logReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
     				nomAlgo = "Regresion Logistica";
+	    			if(sDraw.isOn){
+	    				drawByFlood(logReg);
+	    			}	
 	    		break;
 	    	case 4:	neuNet.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
 	    			nomAlgo = "Red Neuronal";
+	    			if(sDraw.isOn){
+	    				drawByFlood(neuNet);
+	    			}	
 	    		break;
 	    }
 		
@@ -136,11 +148,11 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 				<< '\n';
 	}
 
-	int averangeRight = rightTotal / k;
-	int averageError = errorTotal / k;
+	float averangeRight = rightTotal / k;
+	float averageError = errorTotal / k;
 
-	int percentageRight = percentage(averangeRight);
-	int percentajeError = percentage(averageError);
+	float percentageRight = percentage(averangeRight);
+	float percentajeError = percentage(averageError);
 	
 		std::cout << "--------------------------------------------------------------------------\n"
 			<< "- Media aciertos totales: " << averangeRight << " Media errores totales: " << averageError <<'\n'
@@ -148,7 +160,86 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 			<< "--------------------------------------------------------------------------\n";
 }
 
-int CrossValidation::percentage(int right)
+float CrossValidation::percentage(float right)
 {
 	return ((right * 100) /numDataTest);	
+}
+void CrossValidation::drawByFlood(Perceptron p){
+    ofstream file;
+    string sFile;
+
+	stringstream ssFile;
+	ssFile << "plot/perceptronFlood" << index << ".data";
+
+    file.open(ssFile.str());
+
+    for (double i = sDraw.minOpen ; i < sDraw.maxOpen; i+=0.5)
+    {
+		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
+    	{
+    		file << p.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+    	}    	
+    }
+
+    file.close();
+}
+void CrossValidation::drawByFlood(LinearRegression linR){
+    ofstream file;
+    string sFile;
+
+	stringstream ssFile;
+	ssFile << "plot/linearRegressionFlood" << index << ".data";
+
+    file.open(ssFile.str());
+
+    for (double i = sDraw.minOpen ; i < sDraw.maxOpen; i+=0.5)
+    {
+		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
+    	{
+    		file << linR.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+    	}    	
+    }
+
+    file.close();
+
+}
+void CrossValidation::drawByFlood(LogisticRegression logR){
+    ofstream file;
+    string sFile;
+
+	stringstream ssFile;
+	ssFile << "plot/logisticRegressionFlood" << index << ".data";
+
+    file.open(ssFile.str());
+
+    for (double i = sDraw.minOpen ; i < sDraw.maxOpen; i+=0.5)
+    {
+		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
+    	{
+    		file << logR.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+    	}    	
+    }
+
+    file.close();
+
+}
+void CrossValidation::drawByFlood(NeuralNetwork nn){
+    ofstream file;
+    string sFile;
+
+	stringstream ssFile;
+	ssFile << "plot/neuralNetworkFlood" << index << ".data";
+
+    file.open(ssFile.str());
+
+    for (double i = sDraw.minOpen ; i < sDraw.maxOpen; i+=0.5)
+    {
+		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
+    	{
+    		file << nn.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+    	}    	
+    }
+
+    file.close();
+
 }
