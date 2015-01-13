@@ -18,9 +18,10 @@ public:
 	int validate(double open, double close);
 	void setEta(double newEta);
 private:
+	void init();
 	std::vector<double> vWeights;
 	double eta;
 	double w0;
-
+	double oldEta;
 };
 #endif
