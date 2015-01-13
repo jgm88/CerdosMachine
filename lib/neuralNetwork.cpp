@@ -151,6 +151,7 @@ void NeuralNetwork::feedForward(const vector<double> &inputVals)
 NeuralNetwork::NeuralNetwork(double newAlpha)
 {
     topology.push_back(2);
+    topology.push_back(4);
     topology.push_back(1);
 
     m_recentAverageSmoothingFactor = 100.0;
