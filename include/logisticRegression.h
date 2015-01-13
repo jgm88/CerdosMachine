@@ -14,7 +14,7 @@ public:
 
 	double calculateCost(int numData,std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
 	void train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
-	double probability(double open, double close);
+	double sigmoid(double open, double close);
 	int validate(double open, double close);
 	void setEta(double newEta);
 private:
