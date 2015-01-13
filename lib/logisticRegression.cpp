@@ -2,10 +2,11 @@
 
 LogisticRegression::LogisticRegression(){}
 LogisticRegression::~LogisticRegression(){}
-LogisticRegression::LogisticRegression(double newEta, int inputs)
+LogisticRegression::LogisticRegression(int inputs,double newEta)
 {
 	vWeights = std::vector<double> (inputs, 0);
 	eta = newEta;
+	w0=-1;
 }
 
 void 
@@ -62,7 +63,7 @@ LogisticRegression::setEta(double newEta)
 double 
 LogisticRegression::probability(double open, double close)
 {
-	return (double) (1 / (1 + exp((-1.0) * (vWeights[0] * open) + (vWeights[1] * close))));
+	return (double) (1.0 / (1.0 + exp((-1.0) * (w0+ (vWeights[0] * open) + (vWeights[1] * close)))));
 }
 int 
 LogisticRegression::validate(double open, double close)

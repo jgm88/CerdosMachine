@@ -69,7 +69,7 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 
 	Perceptron perc = Perceptron(2, learningRate);
 	LinearRegression linReg = LinearRegression();
-	LogisticRegression logReg = LogisticRegression(learningRate,2);
+	LogisticRegression logReg = LogisticRegression(2,learningRate);
 	NeuralNetwork neuNet = NeuralNetwork(learningRate);
 
 	std::string nomAlgo = "";

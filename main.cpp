@@ -76,7 +76,7 @@ void logisticRegression(int numIterations, double eta)
 {
 	int acierto=0;
 	int error=0;
-	LogisticRegression lr = LogisticRegression(eta, 2);
+	LogisticRegression lr = LogisticRegression(2,eta);
 	lr.train(numIterations, numTrain, vClass, vOpen, vClose);
 
 	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
