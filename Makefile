@@ -1,10 +1,9 @@
 .PHONY= clean
 
 CC=g++
-OPTIONS= -g -O3 -DARMA_DONT_USE_WRAPPER -L/usr/lib/ -lblas -llapack
+OPTIONS= -g -O3 -DARMA_DONT_USE_WRAPPER -lblas -llapack
 DEBUG= #-D DEBUG
 CFLAGS= -std=c++11 -Wall
-LIBS = 
 LIBDIR=lib
 INCLUDEDIR=include
 _OBJ= perceptron.o linearRegression.o logisticRegression.o multiLinearRegression.o crossValidation.o neuralNetwork.o

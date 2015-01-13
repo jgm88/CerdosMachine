@@ -10,7 +10,7 @@ class LogisticRegression
 public:
 	LogisticRegression();
 	~LogisticRegression();
-	LogisticRegression(double newEta, int inputs);
+	LogisticRegression(int inputs,double newEta);
 
 	double calculateCost(int numData,std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
 	void train(int iterations, int numData, std::vector<int> vClass, std::vector<double> vOpen,std::vector<double> vClose);
@@ -20,6 +20,7 @@ public:
 private:
 	std::vector<double> vWeights;
 	double eta;
+	double w0;
 
 };
 #endif

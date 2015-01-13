@@ -51,7 +51,7 @@ void procesarLinea(string linea)
     // cout << volume << endl;
 
     maxSubMin = high - low;
-    float openSubClose = open - close;
+    float openSubClose = close - open;
 
     int sube = -1;
 
