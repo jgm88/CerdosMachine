@@ -6,6 +6,7 @@
 #include <stack>
 #include <list>
 #include "../include/logisticRegression.h"
+#include "../include/perceptron.h"
 
 std::string::size_type sz; 
 
@@ -124,10 +125,12 @@ void sendCommand(std::string &str)
 
     readInformation(str, open, close);
 
-    LogisticRegression lr = LogisticRegression();
+    // LogisticRegression lr = LogisticRegression(-0.53679, 0.46321, 0.46321);
+    Perceptron pr = Perceptron();
+
     double c = (double)(rand() % 1000) / 999.0;
 
-    int check = lr.validate(open, close);
+    int check = pr.validate(open, close);
 
     switch(check)
     {
