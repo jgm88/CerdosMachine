@@ -25,5 +25,6 @@ private:
 	double w0;
 	double oldEta;
 	double threshold;
+	double minValue;
 };
 #endif

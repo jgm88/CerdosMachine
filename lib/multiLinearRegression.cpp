@@ -15,15 +15,15 @@ void train(int iterations, int numData, std::vector<int> vClass, std::vector<dou
 	mat Xt = X.t();
 
 	// // //traspuesta por original
-	mat XtX = Xt * X;
+	// mat XtX = Xt * X;
 
 	// //Calculamos la inversa de X*Xt
-	mat invXtX = XtX.i(); 
+	// mat invXtX = XtX.i(); 
 
 	// // Multiplicamos Xt * Y
-	mat XtY = Xt * Y;
+	// mat XtY = Xt * Y;
 
 	// //Aplicamos la formula final ((Xt * X)^-1) * Xt*Y
-	mat betaMatrix = invXtX * XtY;
+	// mat betaMatrix = invXtX * XtY;
 
 }
