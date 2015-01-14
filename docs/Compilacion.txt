@@ -1,0 +1,4 @@
+Para Debian:
+
+	-Instalar las librerías requeridas en la documentación adjunta (Armadillo...)
+	-Utilizar el comando "make" en la raiz del proyecto
