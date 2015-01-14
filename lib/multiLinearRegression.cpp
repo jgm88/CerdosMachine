@@ -27,7 +27,7 @@ MultiLinearRegression::~MultiLinearRegression(){}
 
 
 void MultiLinearRegression::printWeight(){
-	
+
 	cout << "Beta0 : "<< beta0 << endl;
 	cout << "Beta1 : "<< beta1 << endl;
 	cout << "Beta2 : "<< beta2 << endl;
