@@ -63,16 +63,14 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 		algorithm:
 		1 == Perceptron
 		2 == Regresion Lineal
-		3 == Regresion Lineal Multiple
-		4 == Regresion Logistica
-		5 == Red Neuronal
+		3 == Regresion Logistica
+		4 == Red Neuronal
 	*/
 
-	Perceptron perc = Perceptron(2, learningRate);
+	// Perceptron perc = Perceptron(2, learningRate);
 	// LinearRegression linReg = LinearRegression();
-	MultiLinearRegression mLinReg = MultiLinearRegression(learningRate);
-	LogisticRegression logReg = LogisticRegression(2,learningRate);
-	NeuralNetwork neuNet = NeuralNetwork(learningRate);
+	// LogisticRegression logReg = LogisticRegression(2,learningRate);
+	// NeuralNetwork neuNet = NeuralNetwork(learningRate);
 
 	std::string nomAlgo = "";
 	float right = 0;
@@ -84,6 +82,10 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	for (int i = 0; i < k; ++i)
 	{
 		divide(vClass, vOpen, vClose);
+		Perceptron perc = Perceptron(2, learningRate);
+		MultiLinearRegression mLinReg = MultiLinearRegression(learningRate);
+		LogisticRegression logReg = LogisticRegression(2,learningRate);
+		NeuralNetwork neuNet = NeuralNetwork(learningRate);
 
 	    switch(algorithm)
 	    {

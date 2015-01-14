@@ -3,6 +3,12 @@
 #include <string>
 #include <cstdlib>
 #include <unistd.h>
+#include <stack>
+#include <list>
+#include "../include/logisticRegression.h"
+#include "../include/perceptron.h"
+
+std::string::size_type sz; 
 
 //
 // Non-Blocking GetLine:
@@ -10,6 +16,7 @@
 //
 void nb_getline(std::istream& in, std::string& str,
                 char delim = '\n', unsigned timeout = 3) {
+
     std::stringstream ss;
     char c = 0;
 
@@ -55,6 +62,75 @@ void sendRandomCommand()
     }
 }
 
+void readInformation(std::string linea, double &auxOpen, double &auxClose)
+{
+    const char delimiter = ' ';
+    std::string aux = "";
+    std::string auxLinea = "";
+    // double date, open, high, low, close, volume = 0;
+    double open = 0, close = 0;
+    int pos = 0;
+
+    for (int i = 0; i < linea.size(); ++i)
+    {
+        if(linea[i] != delimiter)
+        {
+            aux += linea[i];
+        }
+        else
+        {
+            switch(pos)
+            {
+                case 0: //Estoy cogiendo la cadena NextCandle
+                    break;
+                case 1:// date = std::stod(aux, &sz);           
+                    break;
+                case 2: //high = std::stod(aux, &sz);
+                    break;
+                case 3: open = std::stod(aux, &sz);
+                    break;
+                case 4: close = std::stod(aux, &sz);                    
+                    break;
+                case 5: //low = std::stod(aux, &sz); 
+                    break;
+                case 6: //volume = std::stod(aux, &sz);
+                    break;
+                default: break;
+            }
+
+            aux = "";
+            pos ++;
+        }
+    }
+    if(open != 0 && close != 0)
+    {
+        auxOpen = open;
+        auxClose = close;
+    }
+}
+
+void sendCommand(std::string &str)
+{
+    double open, close;
+
+    readInformation(str, open, close);
+
+    LogisticRegression lr = LogisticRegression(-0.53679, 0.46321, 0.46321);
+
+    double c = (double)(rand() % 1000) / 999.0;
+
+    int check = lr.validate(open, close);
+
+    switch(check)
+    {
+        case 1: std::cout << "BUY " << c << std::endl; break;
+        case -1: std::cout << "SELL " << c << std::endl; break;
+        default: break;
+    }
+
+    std::cerr << "open: " << open << " close: " << close << std::endl;
+}
+
 int main(void)
 {
     bool reg = false;
@@ -94,8 +170,16 @@ int main(void)
     while (s != "END") {
         nb_getline(std::cin, s);
         if (s != "")
+        {
             std::cerr << "Recibido: (" << s << ")" << std::endl;
-        sendRandomCommand();
+            sendCommand(s);
+        }
+
+        //* Your Code Here */
+        // sendRandomCommand();
+        // sendCommand(s);
+
+
         usleep(50000);      // Sleep for 0.05 seconds (20 times per second)
     }
 
