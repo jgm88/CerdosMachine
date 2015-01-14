@@ -9,6 +9,8 @@
 
 std::string::size_type sz; 
 
+double myOpen;
+double myClose;
 //
 // Non-Blocking GetLine:
 //    Gets a line of characters from a stream, until it finds a delimiter or the timeout passes
@@ -110,14 +112,14 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
 
 void sendCommand(std::string &str)
 {
-    double open, close;
+    //double open, close;
 
-    readInformation(str, open, close);
+    readInformation(str, myOpen, myClose);
 
     LogisticRegression lr = LogisticRegression(-1.03159, -0.0315945, -0.0315945);
     double c = (double)(rand() % 1000) / 999.0;
 
-    int check = lr.validate(open, close);
+    int check = lr.validate(myOpen, myClose);
 
     switch(check)
     {
@@ -126,7 +128,7 @@ void sendCommand(std::string &str)
         default: break;
     }
 
-    std::cerr << "open: " << open << " close: " << close << std::endl;
+    // std::cerr << "open: " << myOpen << " close: " << myClose << std::endl;
 }
 
 int main(void)
@@ -143,7 +145,7 @@ int main(void)
     // Register into the match
     std::stringstream ss;
     srand(time(NULL));
-    ss << "ply" << rand() % 1000;
+    ss << "plyCPCr2";// << rand() % 1000;
     std::cout << "REGISTER " << ss.str() << std::endl;
 
     // Wait for START command
