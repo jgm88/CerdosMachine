@@ -123,9 +123,12 @@ void sendCommand(std::string &str)
 
     switch(check)
     {
-        case 1: std::cout << "BUY " << c << std::endl; break;
-        case -1: std::cout << "SELL " << c << std::endl; break;
-        default: break;
+        case 1: std::cout << "BUY " << c << std::endl; 
+            break;
+        case -1: std::cout << "SELL " << c << std::endl; 
+            break;
+        default: std::cout << "BUY " << c << std::endl;
+            break;
     }
 
     // std::cerr << "open: " << myOpen << " close: " << myClose << std::endl;
@@ -145,7 +148,7 @@ int main(void)
     // Register into the match
     std::stringstream ss;
     srand(time(NULL));
-    ss << "plyCPCr2";// << rand() % 1000;
+    ss << "CPCr2";// << rand() % 1000;
     std::cout << "REGISTER " << ss.str() << std::endl;
 
     // Wait for START command
