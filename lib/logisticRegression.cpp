@@ -2,6 +2,20 @@
 
 LogisticRegression::LogisticRegression(){}
 LogisticRegression::~LogisticRegression(){}
+LogisticRegression::LogisticRegression(double w0, double vWeight1, double vWeight2)
+{
+	vWeights = std::vector<double> (2,0);	
+	this->w0 = w0;
+	vWeights[0] = vWeight1;
+	vWeights[1] = vWeight2;
+
+}
+void
+LogisticRegression::printWeight(){
+	std::cout << "w0: "<< w0<< std::endl;
+	std::cout << "vWeight1: "<< vWeights[0]<< std::endl;
+	std::cout << "vWeight2: "<< vWeights[1]<< std::endl;
+}
 LogisticRegression::LogisticRegression(int inputs,double newEta)
 {
 	vWeights = std::vector<double> (inputs, -0.1);
@@ -44,11 +58,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 		if(diference<this->threshold && maybeConverg==2)
 		{
 			isEnd=true;	
-<<<<<<< HEAD
-			std::cout<< "HE convergido en iteracion: "<<iterations<< std::endl;
-=======
 			
->>>>>>> master
 
 		} 
 
@@ -96,13 +106,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 		oldJ=J;
 		--iterations;
 	}
-<<<<<<< HEAD
-	std::cout << "W0 " << w0 << std::endl;
-	std::cout << "Peso0 " << vWeights[0] << std::endl;
-	std::cout << "Peso1 "<< vWeights[1] << std::endl; 
-=======
 	printWeight(); 
->>>>>>> master
 }
 void 
 LogisticRegression::setEta(double newEta)

@@ -101,9 +101,11 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
             pos ++;
         }
     }
-
-    auxClose = close;
-    auxOpen = open;    
+    if(close != 0 && open != 0)
+    {
+        auxClose = close;
+        auxOpen = open;    
+    }
 }
 
 void sendCommand(std::string &str)

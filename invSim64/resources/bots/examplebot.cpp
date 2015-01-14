@@ -68,7 +68,7 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
     std::string aux = "";
     std::string auxLinea = "";
     // double date, open, high, low, close, volume = 0;
-    double open, close;
+    double open = 0, close = 0;
     int pos = 0;
 
     for (int i = 0; i < linea.size(); ++i)
@@ -102,21 +102,11 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
             pos ++;
         }
     }
-
-    auxClose = close;
-    auxOpen = open;
-
-    // std::cerr << "Date: " << date << 
-    //                     ", high: " << high << 
-    //                     ", open: " << open <<
-    //                     ", close: " << close << 
-    //                     ", low: " << low << 
-    //                     ", volume: " << volume << '\n';
-
-    // cout << "LINEA: " << open << ", " << high << ", " << low << ", " << close << ", " << volume << ", " << endl;
-    // cout << volume << endl;
-
-    
+    if(open != 0 && close != 0)
+    {
+        auxOpen = open;
+        auxClose = close;
+    }
 }
 
 void sendCommand(std::string &str)
@@ -125,12 +115,11 @@ void sendCommand(std::string &str)
 
     readInformation(str, open, close);
 
-    // LogisticRegression lr = LogisticRegression(-0.53679, 0.46321, 0.46321);
-    Perceptron pr = Perceptron();
+    LogisticRegression lr = LogisticRegression(-0.53679, 0.46321, 0.46321);
 
     double c = (double)(rand() % 1000) / 999.0;
 
-    int check = pr.validate(open, close);
+    int check = lr.validate(open, close);
 
     switch(check)
     {
@@ -139,7 +128,7 @@ void sendCommand(std::string &str)
         default: break;
     }
 
-    // std::cerr << "open: " << open << " close: " << close << std::endl;
+    std::cerr << "open: " << open << " close: " << close << std::endl;
 }
 
 int main(void)
