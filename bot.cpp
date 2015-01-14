@@ -5,8 +5,7 @@
 #include <unistd.h>
 #include <stack>
 #include <list>
-#include "../include/logisticRegression.h"
-#include "../include/perceptron.h"
+#include "machineLearning.h"
 
 std::string::size_type sz; 
 
@@ -68,10 +67,10 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
     std::string aux = "";
     std::string auxLinea = "";
     // double date, open, high, low, close, volume = 0;
-    double open, close;
+    double open = 0, close = 0;
     int pos = 0;
 
-    for (int i = 0; i < linea.size(); ++i)
+    for (unsigned i = 0; i < linea.size(); ++i)
     {
         if(linea[i] != delimiter)
         {
@@ -104,19 +103,7 @@ void readInformation(std::string linea, double &auxOpen, double &auxClose)
     }
 
     auxClose = close;
-    auxOpen = open;
-
-    // std::cerr << "Date: " << date << 
-    //                     ", high: " << high << 
-    //                     ", open: " << open <<
-    //                     ", close: " << close << 
-    //                     ", low: " << low << 
-    //                     ", volume: " << volume << '\n';
-
-    // cout << "LINEA: " << open << ", " << high << ", " << low << ", " << close << ", " << volume << ", " << endl;
-    // cout << volume << endl;
-
-    
+    auxOpen = open;    
 }
 
 void sendCommand(std::string &str)
@@ -125,12 +112,10 @@ void sendCommand(std::string &str)
 
     readInformation(str, open, close);
 
-    // LogisticRegression lr = LogisticRegression(-0.53679, 0.46321, 0.46321);
-    Perceptron pr = Perceptron();
-
+    LogisticRegression lr = LogisticRegression(-1.03159, -0.0315945, -0.0315945);
     double c = (double)(rand() % 1000) / 999.0;
 
-    int check = pr.validate(open, close);
+    int check = lr.validate(open, close);
 
     switch(check)
     {
@@ -139,12 +124,12 @@ void sendCommand(std::string &str)
         default: break;
     }
 
-    // std::cerr << "open: " << open << " close: " << close << std::endl;
+    std::cerr << "open: " << open << " close: " << close << std::endl;
 }
 
 int main(void)
 {
-    bool reg = false;
+    // bool reg = false;
     std::string s = "", subs;
 
     // Wait for INITIALIZE command
