@@ -65,61 +65,6 @@ bool procesarLinea(string linea, int numMuestra)
     return isValida;
 }
 
-void perceptron(int numIterations, double alpha)
-{
-    int acierto = 0;
-    int error = 0;
-	Perceptron perc = Perceptron(2, alpha);
-    perc.train(numIterations, numTrain, vClass, vOpen, vClose);
-
-    cout << endl << "PRUEBAS PERCEPTRON: " <<endl;
-    for (unsigned int i = numTest; i < vClass.size()-1; ++i)
-    {
-    	int comprobar = perc.validate(vOpen[i], vClose[i]);
-    	if (vClass[i+1] == comprobar)
-    		acierto++; 
-    	else
-    		error++;
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
-}
-void logisticRegression(int numIterations, double eta)
-{
-	int acierto=0;
-	int error=0;
-	LogisticRegression lr = LogisticRegression(2,eta);
-	lr.train(numIterations, numTrain, vClass, vOpen, vClose);
-
-	cout << endl << "PRUEBAS REGRESION LOGISTICA: " <<endl;
-    for (unsigned int i = numTest; i < vClose.size()-1; ++i)
-    {
-    	int comprobar = lr.validate(vOpen[i], vClose[i]);
-    	if (vClass[i+1] == comprobar)
-    		acierto++; 
-    	else
-    		error++;
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
-}
-void linearRegression(int numIterations, double eta)
-{
-    int acierto=0;
-    int error=0;
-    LinearRegression lr = LinearRegression();
-
-    lr.train(numIterations, numTrain, vOpen, vClose);
-
-    cout << endl << "PRUEBAS REGRESION LINEAL: " <<endl;
-    for (unsigned int i = numTest; i < vClose.size()-1; ++i)
-    {
-        int comprobar = lr.validate(vOpen[i], vClose[i]);
-        if (vClass[i+1] == comprobar)
-            acierto++; 
-        else
-            error++;
-    }
-    cout << "Aciertos: " << acierto << " Errores: " << error <<endl;
-}
 // Recive el puntero del fichero de entrada
 void lecturaFichero(ifstream* ficheroEntrada)
 {
@@ -230,6 +175,7 @@ void initWithArgs(int argc, char* argv[])
 
 int main(int argc, char* argv[]) // numero cachos, algoritmo a usar, num iteraciones
 { 
+
 	if(argc == 6)
     {
         initWithArgs(argc,argv);   

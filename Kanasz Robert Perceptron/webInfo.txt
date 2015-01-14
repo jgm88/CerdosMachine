@@ -1,1 +1,0 @@
-http://www.codeproject.com/Articles/125346/Single-Layer-Perceptron-as-Linear-Classifier

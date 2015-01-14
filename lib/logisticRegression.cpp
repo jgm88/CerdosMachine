@@ -44,7 +44,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 	bool isEnd=false;
 	int maybeConverg=0;
 	double J,oldJ=std::numeric_limits<double>::max();
-	double peso0=0,peso1=0,pesosW=0,pesoWGood= this->w0;
+	double pesoWGood= this->w0;
 	std::vector<double> pesosGood=this->vWeights;
 
 	while(iterations > 0 && !isEnd)
@@ -80,7 +80,6 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 			}
 			else
 			{
-				peso0=peso1=pesosW=0;
 				pesosGood=vWeights;
 				pesoWGood= w0;
 				gradient=0;

@@ -53,6 +53,7 @@ class CrossValidation
 
 	void drawByFlood(Perceptron p);
 	void drawByFlood(LinearRegression linR);
+	void drawByFlood(MultiLinearRegression mLinR);
 	void drawByFlood(LogisticRegression logR);
 	void drawByFlood(NeuralNetwork nn);
  }; 
