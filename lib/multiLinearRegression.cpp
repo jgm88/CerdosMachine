@@ -16,7 +16,23 @@ MultiLinearRegression::MultiLinearRegression(double eta){
 	beta1 = 0;
 	beta2 = 0;
 }
+MultiLinearRegression::MultiLinearRegression(double b0, double b1, double b2){
+	this->eta = 0.00003; 
+	threshold = 0.0001;
+	beta0 = b0;
+	beta1 = b1;
+	beta2 = b2;
+}
 MultiLinearRegression::~MultiLinearRegression(){}
+
+
+void MultiLinearRegression::printWeight(){
+	
+	cout << "Beta0 : "<< beta0 << endl;
+	cout << "Beta1 : "<< beta1 << endl;
+	cout << "Beta2 : "<< beta2 << endl;
+}
+
 
 int MultiLinearRegression::validate(double open, double close){
 
