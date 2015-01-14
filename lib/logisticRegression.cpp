@@ -58,7 +58,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 		if(diference<this->threshold && maybeConverg==2)
 		{
 			isEnd=true;	
-			// std::cout<< "HE convergido en iteracion: "<<iterations<< std::endl;
+			
 
 		} 
 
@@ -66,7 +66,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 		{
 			if(oldJ<J || isnan(J)){
 				break;
-				// this->eta/=2.0;
+				this->eta/=2.0;
 				if(diference<this->threshold*1.5)
 					maybeConverg++;
 
@@ -76,10 +76,6 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 
 				vWeights= pesosGood;
 				w0=pesoWGood;
-					// std::cout << "iterations "<< iterations << " Soy mayor reajusto eta "<< eta;
-					// std::cout << " W0 restablecido: " << w0 << std::endl;
-					// std::cout << "Pesos: "<< vWeights[0] << std::endl;
-					// std::cout << "Pesos: "<< vWeights[1] << std::endl;
 
 			}
 			else
@@ -87,37 +83,22 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 				peso0=peso1=pesosW=0;
 				pesosGood=vWeights;
 				pesoWGood= w0;
-				// gradient=0;
+				gradient=0;
 				for (int i = 0; i < numData-1; ++i)
 				{
-					// la clase que entre esta definida con -1 y 1
-					// hacemos la siguiente operaciones para definirla entre 0 y 1
-					sClass = vClass[i+1]; 
-					// if((sigmoid(vOpen[i],vClose[i])-sClass) !=0)
-					// 	std::cout << "ES "<< sigmoid(vOpen[i],vClose[i])-sClass<< std::endl;
 
-					// pesosW += (sigmoid(vOpen[i],vClose[i])-sClass);
-					// peso0 += (sigmoid(vOpen[i],vClose[i])-sClass)*vOpen[i];
-					// peso1 += (sigmoid(vOpen[i],vClose[i])-sClass)*vClose[i];
+					sClass = vClass[i+1]; 
 
 					// Formula de Yaser para minimizar el Error
 					gradient += (double)(sClass) / (1 + exp(sClass * w0));
 					gradient += (double)(sClass * vOpen[i]) / (1 + exp(sClass * vWeights[0] * vOpen[i]));
 					gradient += (double)(sClass * vClose[i]) / (1 + exp(sClass * vWeights[1] * vClose[i]));
 				}
-				// std::cin >>maybeConverg;	
-				// std::cout << "PesoW "<< pesosW << std::endl;
-				// std::cout << "Peso0 "<< peso0 << std::endl;
-				// std::cout << "Peso1 "<< peso1 << std::endl;
 
 				gradient *= (double)-1/(double)(numData-1);
 				this->w0 -= eta*gradient;
 				vWeights[0] -= eta*gradient;
 				vWeights[1] -= eta*gradient;
-				// this->w0 -= this->eta*(pesosW/double(numData-1));
-				// this->vWeights[0] -= eta*(peso0/double(numData-1));
-				// this->vWeights[1] -= eta*(peso1/double(numData-1));
-				// std::cout << "W0 entrenado: " << w0 << std::endl;
 				
 			}
 
@@ -125,7 +106,7 @@ LogisticRegression::train(int iterations, int numData, std::vector<int> vClass, 
 		oldJ=J;
 		--iterations;
 	}
-	// printWeight(); 
+	printWeight(); 
 }
 void 
 LogisticRegression::setEta(double newEta)
