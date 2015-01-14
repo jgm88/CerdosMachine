@@ -63,12 +63,14 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 		algorithm:
 		1 == Perceptron
 		2 == Regresion Lineal
-		3 == Regresion Logistica
-		4 == Red Neuronal
+		3 == Regresion Lineal Multiple
+		4 == Regresion Logistica
+		5 == Red Neuronal
 	*/
 
 	Perceptron perc = Perceptron(2, learningRate);
-	LinearRegression linReg = LinearRegression();
+	// LinearRegression linReg = LinearRegression();
+	MultiLinearRegression mLinReg = MultiLinearRegression(learningRate);
 	LogisticRegression logReg = LogisticRegression(2,learningRate);
 	NeuralNetwork neuNet = NeuralNetwork(learningRate);
 
@@ -91,10 +93,10 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 	    				drawByFlood(perc);
 	    			}	
 	    		break;
-    		case 2: linReg.train(numIterations, numDataTrain, trainOpen, trainClose);
-    				nomAlgo = "Regresion Lineal";
+    		case 2:	mLinReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
+    				nomAlgo = "Regresion Lineal Multiple";
 	    			if(sDraw.isOn){
-	    				drawByFlood(linReg);
+	    				drawByFlood(mLinReg);
 	    			}	
 	    		break;
     		case 3:	logReg.train(numIterations, numDataTrain, trainClass, trainOpen, trainClose);
@@ -122,8 +124,8 @@ CrossValidation::average(std::vector<int> vClass, std::vector<double> vOpen, std
 			{
 				case 1: check = perc.validate(testOpen[i], testClose[i]);
 					break;
-				case 2: check = linReg.validate(testOpen[i], testClose[i]);
-	    			break;
+				case 2: check = mLinReg.validate(testOpen[i], testClose[i]);
+    				break;
     			case 3:	check = logReg.validate(testOpen[i], testClose[i]);
 	    			break;
 	    		case 4:	check = neuNet.validate(testOpen[i], testClose[i]);
@@ -197,6 +199,31 @@ void CrossValidation::drawByFlood(LinearRegression linR){
 		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
     	{
     		file << linR.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
+    	}    	
+    }
+
+    file.close();
+
+}
+void CrossValidation::drawByFlood(MultiLinearRegression mLinR){
+    ofstream file;
+    string sFile;
+
+	stringstream ssFile;
+	ssFile << "plot/mlinrFlood" << index << ".data";
+
+    file.open(ssFile.str());
+
+    // cout << "minOpen " << sDraw.minOpen 	<< endl;
+    // cout << "maxOpen " << sDraw.maxOpen 	<< endl;
+    // cout << "minClose " << sDraw.minClose 	<< endl;
+    // cout << "maxClose " << sDraw.maxClose 	<< endl;
+
+    for (double i = sDraw.minOpen ; i < sDraw.maxOpen; i+=0.5)
+    {
+		for (double j = sDraw.minClose ; j < sDraw.maxClose; j+=0.01)
+    	{
+    		file << mLinR.validate(i,j) << '\t'<< i << '\t'<< j<< std::endl;
     	}    	
     }
 

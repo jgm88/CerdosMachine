@@ -1,0 +1,3 @@
+plot 'salidaEj.dat' using 2:3:1 with points palette, f(x) title 'X'
+fit f(x) 'salidaEj.dat' using 2:3 via m,n
+f(x) = m*x + n
